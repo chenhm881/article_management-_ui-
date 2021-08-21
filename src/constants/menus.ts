@@ -18,7 +18,7 @@ export const menus = [{
   },
   {
     key: '编辑',
-    link: '/app/blog/edit',
+    link: '/app/articles/edit',
     title: '编辑',
     icon: 'FileAddOutlined'
   },

@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import {blog as blogStore} from "./blog";
+import {articles as blogStore} from "./articles";
 import {user as userStore} from "./user";
 
 

@@ -9,20 +9,27 @@ import Tags from "../components/Tags";
 
 const Index = (props: RouteComponentProps | any) => {
   const { route } = props;
+    const contentHeight = document.body.clientHeight - 64 -62
   return (
     <div>
       <BHeader/>
       <Row>
           <Col lg={{span: 18}}
                md={{span: 16}}
-               xs={{span: 24}} order={1}>
+               xs={{span: 24}} order={1} style={{ padding: 24, minHeight: contentHeight, height: '100%', overflow: 'initial'}}>
           {renderRoutes(route.routes)}
           </Col>
           <Col lg={{span: 6}}
                md={{span: 8}}
                xs={{span: 0}} order={2}>
-              <Tags></Tags>
-           <Categories></Categories>
+          <Row style={{margin: 24}}>
+              <Col><Tags></Tags></Col>
+          </Row>
+          <Row style={{margin: 24}}>
+              <Col>
+                  <Categories></Categories>
+              </Col>
+          </Row>
           </Col>
       </Row>
       <BFooter/>

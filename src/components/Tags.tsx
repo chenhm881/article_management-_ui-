@@ -13,7 +13,6 @@ class Tags extends React.Component {
     render() {
         return (
             <Card
-                style={{width: 300}}
                 cover={
                     <img
                         alt="example"
@@ -34,7 +33,7 @@ class Tags extends React.Component {
             </Card>
         )
     }
-}
+};
 
 // 将 reducer 中的状态插入到组件的 props 中
 const mapStateToProps = (state: any) => {

@@ -1,8 +1,33 @@
 import { List, Avatar, Space } from 'antd';
 import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 import React from "react";
+import {Dispatch} from "redux";
+import {connect} from "react-redux";
+import {RouteComponentProps, withRouter} from "react-router-dom";
+import {listFailure, listSuccess} from "../redux/articles";
+import {getArticleList} from "../ajax/articles";
 
-class Articles extends React.Component<any> {
+interface PropsInterface extends RouteComponentProps<any> {
+    articles: [{[key: string]: any}],
+    tags: [string],
+    message: string,
+    listSuccess: (name: string) => void
+    listFailure: (name: string) => void
+}
+
+class Articles extends React.Component<PropsInterface> {
+
+    componentDidMount() {
+       this.getArticles();
+    }
+
+    componentWillUnmount() {
+
+    }
+
+    getArticles() {
+        getArticleList("", "", this.props)
+    }
 
     render() {
         const listData = [];
@@ -17,21 +42,20 @@ class Articles extends React.Component<any> {
                     'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
             });
         }
-
         return (
             <List
                 itemLayout="vertical"
                 size="large"
                 pagination={{
-                    onChange: page => {
-                        console.log(page);
+                    onChange: (page, pageSize) => {
+                        console.log(`page = ${page}; pageSize = ${pageSize}`);
                     },
                     pageSize: 3,
                 }}
                 dataSource={listData}
                 footer={
                     <div>
-                        <b>ant design</b> footer part
+                        <b></b>
                     </div>
                 }
                 renderItem={item => (
@@ -72,4 +96,24 @@ class Articles extends React.Component<any> {
     }
 }
 
-export default Articles;
+const mapStateToProps = (state: any) => {
+    const {articles, message, tags, totalSize } = state.blogStore;
+    return {
+        articles: articles,
+        message: message,
+        tags:tags,
+        totalSize: totalSize
+    }
+};
+
+const mapDispatcherToProps = (dispatch: Dispatch) => ({
+    listSuccess: (name: string) => dispatch(listSuccess(name)),
+    listFailure: (name: string) => dispatch(listFailure(name))
+});
+
+
+export default connect(
+    mapStateToProps,
+    mapDispatcherToProps
+)(withRouter(Articles));
+
