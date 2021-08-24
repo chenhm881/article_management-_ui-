@@ -1,36 +1,17 @@
 import Index from "../views/Index";
-import BFooter from "../components/BFooter";
-import BTab from "../views/BTab";
 import Articles from "../views/Articles";
+import Publish from "../views/Publish";
 
 export default [
-  {
-    path:"/",
-    component: Index,
-    routes: [
-      {
-        path: "/",
-        exact: true,
-        component: Articles
-      },
-      {
-        path: "/2",
-        component: BFooter,
-      },
-      {
-        path: "/3",
-        component: BTab,
+    {
+        component: Index,
         routes: [
-          {
-            path: "/child/:id/grand-child",
-            component: Index
-          }
+            {
+                path: "/articles",
+                component: Articles,
+                exact: true
+            }
         ]
-      }
-    ]
-  },
-  {
-    path:"/logout",
-    component: Index
-  }
+    }
+
 ];

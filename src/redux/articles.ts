@@ -1,9 +1,11 @@
 
 const initState = {
   articles: [],
+  article: Object.create(null),
   message: '',
+  category: 0,
   tags: [],
-  totalSize: 0
+  totalSize: 0,
 }
 
 /**
@@ -20,6 +22,20 @@ export function articles(state= initState, action: any) {
         message: action.payload.message,
         totalSize: action.payload.data.length
       }
+    case 'FIND_SUCCESS':
+      return {
+        ...state,
+        article: action.payload.data,
+        message: action.payload.message,
+        category: action.payload.category,
+        tags: action.payload.tags
+      }
+    case 'SAVE_SUCCESS':
+      return {
+        ...state,
+        article: action.payload.data,
+        message: action.payload.message
+      }
     default:
       return state
   }
@@ -28,16 +44,44 @@ export function articles(state= initState, action: any) {
 /**
  * action
  */
-export function listSuccess(data: any) {
+export function listSuccess(payload: any) {
   return {
     type: 'LIST_SUCCESS',
-    payload: data
+    payload: payload
   }
 }
 
-export function listFailure(data: any) {
+export function listFailure(payload: any) {
   return {
     type: 'LIST_FAILURE',
+    payload: payload
+  }
+}
+
+export function findSuccess(payload: any) {
+  return {
+    type: 'FIND_SUCCESS',
+    payload: payload
+  }
+}
+
+export function findFailure(payload: any) {
+  return {
+    type: 'FIND_FAILURE',
+    payload: payload
+  }
+}
+
+export function saveSuccess(payload: any) {
+  return {
+    type: 'SAVE_SUCCESS',
+    payload: payload
+  }
+}
+
+export function saveFailure(data: any) {
+  return {
+    type: 'SAVE_FAILURE',
     payload: data
   }
 }

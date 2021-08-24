@@ -1,23 +1,48 @@
-import React from 'react';
+import React, {ComponentState, useState} from 'react';
 import { renderRoutes } from 'react-router-config';
 import BHeader from "../components/BHeader";
 import BFooter from "../components/BFooter";
 import {Col, Row} from "antd";
-import {RouteComponentProps} from "react-router-dom";
+import {BrowserRouter as Router, Route, RouteComponentProps, Switch, withRouter} from "react-router-dom";
 import Categories from "../components/Categories";
 import Tags from "../components/Tags";
+import Publish from "./Publish";
+import BTab from "./BTab";
+import Articles from "./Articles";
 
 const Index = (props: RouteComponentProps | any) => {
-  const { route } = props;
-    const contentHeight = document.body.clientHeight - 64 -62
+    const { route, location } = props;
+    const [activeTabKey, setActiveTabKey] = useState(location.pathname);
+    const contentHeight = document.body.clientHeight - 64 -62;
+
+    let renderContent = () => {
+        switch (activeTabKey) {
+            case '/articles':
+                return <Articles />;
+            case '/2':
+                return <Publish />;
+            case '/3':
+                return <BTab />;
+            default:
+                return <div></div>;
+        }
+    }
+
+  let onTabChange = (pathname: string) => {
+      props.history.push({
+          pathname: pathname
+      });
+      setActiveTabKey(pathname);
+  };
+
   return (
     <div>
-      <BHeader/>
+      <BHeader onTabChange={(pathname: string) => onTabChange(pathname)}/>
       <Row>
           <Col lg={{span: 18}}
                md={{span: 16}}
                xs={{span: 24}} order={1} style={{ padding: 24, minHeight: contentHeight, height: '100%', overflow: 'initial'}}>
-          {renderRoutes(route.routes)}
+              {renderContent()}
           </Col>
           <Col lg={{span: 6}}
                md={{span: 8}}
@@ -36,4 +61,4 @@ const Index = (props: RouteComponentProps | any) => {
     </div>
   );
 }
-export default React.memo(Index);
+export default withRouter(React.memo(Index));

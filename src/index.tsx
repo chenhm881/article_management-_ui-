@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {applyMiddleware, compose, createStore} from 'redux';
-
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import 'antd/dist/antd.css';
@@ -17,9 +16,7 @@ const store = createStore(
 );
 
 ReactDOM.render(
-  <React.StrictMode>
       <Provider store={store}><App /></Provider>,
-  </React.StrictMode>,
   document.getElementById('root')
 );
 

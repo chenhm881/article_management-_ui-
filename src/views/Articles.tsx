@@ -3,15 +3,16 @@ import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
 import React from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
-import {RouteComponentProps, withRouter} from "react-router-dom";
+import {withRouter} from "react-router-dom";
 import {listFailure, listSuccess} from "../redux/articles";
 import {getArticleList} from "../ajax/articles";
+import {RouteConfigComponentProps} from "react-router-config";
 
-interface PropsInterface extends RouteComponentProps<any> {
+interface PropsInterface extends RouteConfigComponentProps<any> {
     articles: [{[key: string]: any}],
     tags: [string],
     message: string,
-    listSuccess: (name: string) => void
+    listSuccess: (name: string) => void,
     listFailure: (name: string) => void
 }
 
@@ -30,6 +31,7 @@ class Articles extends React.Component<PropsInterface> {
     }
 
     render() {
+        const {articles, tags, message} = this.props;
         const listData = [];
         for (let i = 0; i < 23; i++) {
             listData.push({
@@ -107,8 +109,8 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatcherToProps = (dispatch: Dispatch) => ({
-    listSuccess: (name: string) => dispatch(listSuccess(name)),
-    listFailure: (name: string) => dispatch(listFailure(name))
+    listSuccess: (payload: any) => dispatch(listSuccess(payload)),
+    listFailure: (payload: any) => dispatch(listFailure(payload))
 });
 
 

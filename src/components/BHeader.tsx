@@ -7,12 +7,18 @@ import {
     Dropdown,
     Avatar, Menu, Tabs,
 } from 'antd';
-import {AndroidOutlined, AppleOutlined, CaretDownOutlined} from "@ant-design/icons";
+import {
+    AndroidOutlined,
+    AppleOutlined,
+    CaretDownOutlined,
+    FormOutlined
+} from "@ant-design/icons";
 import Cookies from 'js-cookie';
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {loginSuccess} from "../redux/user";
 import {RouteComponentProps, withRouter} from 'react-router-dom';
+import Link from 'antd/lib/typography/Link';
 
 const { Header } = Layout;
 const { TabPane } = Tabs;
@@ -24,7 +30,8 @@ type IProps = {
 
 interface PropsInterface extends RouteComponentProps<any> {
     name: string,
-    loginTodo: (name: string) => void
+    loginTodo: (name: string) => void,
+    onTabChange: (pathname: string)=> void
 }
 
 type State = {
@@ -65,12 +72,13 @@ class BHeader extends React.Component<PropsInterface> {
 
     handleTabChange = (val: any) => {
         //window.history.pushState(null, '', `/${val}`)
-        this.props.history.push(`/${val}`);
-        //this.props.loginTodo(val);
+        //this.props.history.push(`/${val}`);
+        this.props.onTabChange(`/${val}`);
+
     }
 
     render() {
-      const {name} = this.props;
+      const {name, location} = this.props;
       const menu = (
           <Menu>
               <Menu.Item key={2}>
@@ -88,7 +96,7 @@ class BHeader extends React.Component<PropsInterface> {
           </Menu>
       );
     return (
-            <Tabs defaultActiveKey="1"
+            <Tabs defaultActiveKey={location.pathname.slice(1)}
                   centered
                   tabBarExtraContent={{
                       left: <Button className="tabs-extra-demo-button">Left Extra Action</Button>,
@@ -109,8 +117,14 @@ class BHeader extends React.Component<PropsInterface> {
                                   <div
                                       className="user-info"
                                       style={{display: Cookies.get("token") ? 'flex' : 'flex'}}
-                                  >
-                                      <Dropdown
+                                  >   <Row>
+                                      <Col style={{ marginRight: 10}}>
+                                          <Button type="primary" icon={<FormOutlined />} onClick={ () => {
+                                              this.props.history.push(`/publish`);
+                                          }}/>
+                                      </Col>
+                                      <Col>
+                                          <Dropdown
                                           placement="bottomCenter"
                                           overlay={menu}
                                       >
@@ -123,6 +137,9 @@ class BHeader extends React.Component<PropsInterface> {
                                               {Cookies.get("username") ? "" : "huiming"}
                                           </Avatar>
                                       </Dropdown>
+                                      </Col>
+                                  </Row>
+
                                   </div></React.Fragment>,
                   } }
                   onChange={this.handleTabChange}
@@ -132,7 +149,7 @@ class BHeader extends React.Component<PropsInterface> {
                       <AppleOutlined />
                       文章
                     </span>
-                } key=""/>
+                } key="articles"/>
                 <TabPane tab={
                     <span>
                       <AndroidOutlined />
