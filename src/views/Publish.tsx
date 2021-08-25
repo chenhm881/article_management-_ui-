@@ -15,7 +15,7 @@ import {SelectValue} from "antd/lib/select";
 
 interface PropsInterface extends RouteConfigComponentProps<any> {
     article: {[key: string]: any},
-    tags: {value: number; label: string; }[],
+    tags: number[],
     message: string,
     category: string,
     saveSuccess: (payload: any) => void,
@@ -64,7 +64,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
 
     componentDidMount() {
         let match =this.props.match.params
-        this.getArticle(match.id);
+        if (match.id ) {this.getArticle(match.id);}
     }
 
     getArticle(id: number) {
@@ -94,7 +94,13 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
         };
 
         const onFinish = (values: any)=> {
-            save(values, this.props);
+            let match =this.props.match.params;
+            let data = values.article;
+            if (match.id) {
+                data.id = match.id;
+            }
+            data.tags = values.tags;
+            save(data, this.props);
         };
 
         const handleChange = (name: string, value: SelectValue | string | undefined) => {
@@ -106,12 +112,20 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
               name="nest-messages"
               fields={[
                   {
-                      name: ['article', 'tags'],
+                      name: [ 'tags'],
                       value: tags,
                   },
                   {
-                      name: ['article', 'category'],
-                      value: category,
+                      name: ['article', 'title'],
+                      value: article.title,
+                  },
+                  {
+                      name: ['article', 'categoryId'],
+                      value: article.categoryId,
+                  },
+                  {
+                      name: ['article', 'summary'],
+                      value: article.summary,
                   },
                   {
                       name: ['article', 'content'],
@@ -123,7 +137,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
             <Form.Item name={['article', 'title']} label="Title" rules={[{ required: true }]}>
                 <Input />
             </Form.Item>
-            <Form.Item name={['article', 'category']} label="Category" rules={[{ required: true }]}>
+            <Form.Item name={['article', 'categoryId']} label="Category" rules={[{ required: true }]}>
                 <Select
                     style={{ width: '100%' }}
                     placeholder="Please select"
@@ -131,7 +145,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
                     options={[{value: 1, label: 'java基础知识'}, {value: 2, label: 'react进阶'}, {value: 3, label: 'vue进阶'}]}
                 />
             </Form.Item>
-            <Form.Item name={['article', 'tags']} label="Tags">
+            <Form.Item name={[ 'tags']} label="Tags">
                 <Select
                     mode="multiple"
                     style={{ width: '100%' }}
@@ -140,7 +154,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
                     options={[{value: 1, label: 'jvm调优'}, {value: 2, label: 'redux'}, {value: 3, label: '高阶'}, {value: 4, label: '发布订阅'}]}
                 />
             </Form.Item>
-            <Form.Item name={['article', 'description']} label="Description" rules={[{ required: true }]}>
+            <Form.Item name={['article', 'summary']} label="Summary" rules={[{ required: true }]}>
                 <TextArea />
             </Form.Item>
             <Form.Item name={['article', 'content']} label="Content">

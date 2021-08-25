@@ -2,18 +2,16 @@ import axios from 'axios'
 import instance from "./interceptors";
 
 
-export function getArticleList(query: any, page: any, props: any) {
+
+export function getArticleList(query: any, props: any) {
     instance
         .post('http://localhost:8181/articles',
-            JSON.stringify({
-                tag: 2,
-                category: 2
-            }),
+            JSON.stringify(query),
             {timeout: 86400000, headers: {
                     'Content-type': "application/json",
                     "dataType": "json",
                 }}).then((res: any) => {
-        if (res.status === 200 && res.data.code === 0) {
+        if (res.status === 200 && res.data) {
             props.listSuccess(res)
         } else {
             props.listFailure(res)
@@ -24,18 +22,16 @@ export function getArticleList(query: any, page: any, props: any) {
         })
 };
 
-export function save(article: any, props: any) {
+export function save(data: any, props: any) {
+    const qs = require("qs");
     instance
         .post('http://localhost:8181/saveArticle',
-            JSON.stringify({
-                id: 1,
-                content: article.content
-            }),
+            JSON.stringify(data),
             {timeout: 86400000, headers: {
                     'Content-type': "application/json",
                     "dataType": "json",
                 }}).then((res: any) => {
-        if (res.status === 200 && res.data.code === 0) {
+        if (res.status === 200 && res.data) {
             props.saveSuccess(res)
         } else {
             props.saveFailure(res)

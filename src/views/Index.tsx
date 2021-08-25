@@ -20,7 +20,7 @@ const Index = (props: RouteComponentProps | any) => {
             case '/articles':
                 return <Articles />;
             case '/2':
-                return <Publish />;
+                return <Articles />;
             case '/3':
                 return <BTab />;
             default:

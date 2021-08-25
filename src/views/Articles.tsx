@@ -11,9 +11,10 @@ import {RouteConfigComponentProps} from "react-router-config";
 interface PropsInterface extends RouteConfigComponentProps<any> {
     articles: [{[key: string]: any}],
     tags: [string],
+    totalSize: number,
     message: string,
-    listSuccess: (name: string) => void,
-    listFailure: (name: string) => void
+    listSuccess: (payload: any) => void,
+    listFailure: (payload: any) => void
 }
 
 class Articles extends React.Component<PropsInterface> {
@@ -22,28 +23,12 @@ class Articles extends React.Component<PropsInterface> {
        this.getArticles();
     }
 
-    componentWillUnmount() {
-
-    }
-
     getArticles() {
-        getArticleList("", "", this.props)
+        getArticleList({pageSize: 3, page: 1},this.props)
     }
 
     render() {
-        const {articles, tags, message} = this.props;
-        const listData = [];
-        for (let i = 0; i < 23; i++) {
-            listData.push({
-                href: 'https://ant.design',
-                title: `ant design part ${i}`,
-                avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-                description:
-                    'Ant Design, a design language for background applications, is refined by Ant UED Team.',
-                content:
-                    'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
-            });
-        }
+        const {articles, totalSize, message} = this.props;
         return (
             <List
                 itemLayout="vertical"
@@ -54,7 +39,7 @@ class Articles extends React.Component<PropsInterface> {
                     },
                     pageSize: 3,
                 }}
-                dataSource={listData}
+                dataSource={articles}
                 footer={
                     <div>
                         <b></b>
@@ -62,7 +47,7 @@ class Articles extends React.Component<PropsInterface> {
                 }
                 renderItem={item => (
                     <List.Item
-                        key={item.title}
+                        key={item.id}
                         actions={[
                             <Space>
                                 {React.createElement(StarOutlined)}
@@ -87,8 +72,8 @@ class Articles extends React.Component<PropsInterface> {
                     >
                         <List.Item.Meta
                             avatar={<Avatar src={item.avatar} />}
-                            title={<a href={item.href}>{item.title}</a>}
-                            description={item.description}
+                            title={<a href={`/blog/${item.id}`}>{item.title}</a>}
+                            description={item.summary}
                         />
                         {item.content}
                     </List.Item>
