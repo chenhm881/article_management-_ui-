@@ -58,12 +58,13 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
   ];
 
   componentWillMount() {
+    this.getBlog();
     marked.setOptions({
       highlight: (code: any) => hljs.highlightAuto(code).value
     })
   }
   componentDidMount() {
-    this.getBlog();
+
     this.setState({
       loading: !this.state.loading
     })
@@ -96,15 +97,15 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
             ]}
           >
             <div className="article-tags">
-              <span>{this.props.article.viewCounts} 次浏览</span>
+              <span>所属标签: {this.props.article.category && this.props.article.category.categoryName}</span>
               <span>{
-                this.props.tags.map(v => (
+                this.props.article.tags && this.props.article.tags!.map((v: {[key: string]: any} ) => (
                   <Tag
-                    key={v}
+                    key={v.tagId}
                     color={this.color[Math.floor(Math.random()*this.color.length)]}
                     onClick={()=>{}}
                   >
-                    {v}
+                    {v.tagName}
                   </Tag>
                 ))}
                 </span>

@@ -11,17 +11,29 @@ import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import TextArea from "antd/lib/input/TextArea";
 import {find, save} from "../ajax/articles";
+import {getCategories} from "../ajax/categories";
+import {getTags} from "../ajax/tags";
 import {SelectValue} from "antd/lib/select";
+import {listFailure as listCategoryFailure, listCategorySuccess} from "../redux/categories";
+import {listTagSuccess, listFailure as listTagFailure} from "../redux/tags";
+
 
 interface PropsInterface extends RouteConfigComponentProps<any> {
     article: {[key: string]: any},
     tags: number[],
     message: string,
     category: string,
+    listTag: [{[key: string]: any}],
+    listCategory: [{[key: string]: any}]
     saveSuccess: (payload: any) => void,
     saveFailure: (payload: any) => void,
     findSuccess: (payload: any) => void,
-    findFailure: (payload: any) => void
+    findFailure: (payload: any) => void,
+    listCategorySuccess: (payload: any) => void,
+    listCategoryFailure: (payload: any) => void
+    listTagSuccess: (payload: any) => void,
+    listTagFailure: (payload: any) => void
+
 }
 
 interface StateInterface {
@@ -65,12 +77,13 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
     componentDidMount() {
         let match =this.props.match.params
         if (match.id ) {this.getArticle(match.id);}
+        getCategories("", this.props);
+        getTags("", this.props);
     }
 
     getArticle(id: number) {
         find(id,  this.props);
     }
-
 
     render() {
         const layout = {
@@ -78,7 +91,8 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
             wrapperCol: { span: 18 },
         };
         const { content } = this.state;
-        const {article, category, tags} = this.props;
+        const {article, category, tags, listCategory, listTag} = this.props;
+
         console.log(JSON.stringify(article));
         console.log(category);
         console.log(JSON.stringify(tags));
@@ -113,7 +127,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
               fields={[
                   {
                       name: [ 'tags'],
-                      value: tags,
+                      value: (article.tags instanceof Array ? article.tags.map(({tagId }) => tagId) : undefined)
                   },
                   {
                       name: ['article', 'title'],
@@ -121,7 +135,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
                   },
                   {
                       name: ['article', 'categoryId'],
-                      value: article.categoryId,
+                      value: article.category ? article.category.categoryId : undefined,
                   },
                   {
                       name: ['article', 'summary'],
@@ -142,7 +156,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
                     style={{ width: '100%' }}
                     placeholder="Please select"
                     onChange={(value) => handleChange('category', value)}
-                    options={[{value: 1, label: 'java基础知识'}, {value: 2, label: 'react进阶'}, {value: 3, label: 'vue进阶'}]}
+                    options={listCategory.map(({categoryId, categoryName}) => ({value: categoryId, label: categoryName}))}
                 />
             </Form.Item>
             <Form.Item name={[ 'tags']} label="Tags">
@@ -151,7 +165,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
                     style={{ width: '100%' }}
                     placeholder="Please select"
                     onChange={(value) => handleChange('tags', value)}
-                    options={[{value: 1, label: 'jvm调优'}, {value: 2, label: 'redux'}, {value: 3, label: '高阶'}, {value: 4, label: '发布订阅'}]}
+                    options={listTag.map(({tagId, tagName}) => ({value: tagId, label: tagName}))}
                 />
             </Form.Item>
             <Form.Item name={['article', 'summary']} label="Summary" rules={[{ required: true }]}>
@@ -176,11 +190,15 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
 
 const mapStateToProps = (state: any) => {
     const {article, message, tags, category } = state.blogStore;
+    const {categories } = state.categoryStore;
+    const listTag = state.tagStore.tags;
     return {
         article: article,
         message: message,
         category: category,
-        tags:tags
+        tags:tags,
+        listTag:  listTag,
+        listCategory: categories
     }
 };
 
@@ -188,7 +206,11 @@ const mapDispatcherToProps = (dispatch: Dispatch) => ({
     saveSuccess: (payload: any) => dispatch(saveSuccess(payload)),
     saveFailure: (payload: any) => dispatch(saveFailure(payload)),
     findSuccess: (payload: any) => dispatch(findSuccess(payload)),
-    findFailure: (payload: any) => dispatch(findFailure(payload))
+    findFailure: (payload: any) => dispatch(findFailure(payload)),
+    listCategorySuccess: (payload: any) => dispatch(listCategorySuccess(payload)),
+    listCategoryFailure: (payload: any) => dispatch(listCategoryFailure(payload)),
+    listTagSuccess: (payload: any) => dispatch(listTagSuccess(payload)),
+    listTagFailure: (payload: any) => dispatch(listTagFailure(payload))
 });
 
 

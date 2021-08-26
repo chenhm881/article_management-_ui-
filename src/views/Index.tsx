@@ -6,7 +6,6 @@ import {Col, Row} from "antd";
 import {BrowserRouter as Router, Route, RouteComponentProps, Switch, withRouter} from "react-router-dom";
 import Categories from "../components/Categories";
 import Tags from "../components/Tags";
-import Publish from "./Publish";
 import BTab from "./BTab";
 import Articles from "./Articles";
 
@@ -52,7 +51,7 @@ const Index = (props: RouteComponentProps | any) => {
           </Row>
           <Row style={{margin: 24}}>
               <Col>
-                  <Categories></Categories>
+                  <Categories/>
               </Col>
           </Row>
           </Col>
