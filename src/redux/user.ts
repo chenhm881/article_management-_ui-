@@ -74,6 +74,13 @@ export function loginFailure(data: any) {
   }
 }
 
+export function logoutSuccess(data: any) {
+  return {
+    type: LOGOUT,
+    name: data
+  }
+}
+
 export function registerSuccess(data: any) {
   return {
     type: REGISTER_SUCCESS,
@@ -88,9 +95,10 @@ export function registerFailure(data: any) {
   }
 }
 
-export function logout() {
+export function logout(data: any) {
   return {
-    type: LOGOUT
+    type: LOGOUT,
+    name: data
   }
 }
 

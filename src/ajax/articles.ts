@@ -1,4 +1,5 @@
 import instance from "./interceptors";
+import Cookies from "js-cookie";
 
 
 export function getArticleList(query: any, props: any) {
@@ -28,6 +29,7 @@ export function save(data: any, props: any) {
             {timeout: 86400000, headers: {
                     'Content-type': "application/json",
                     "dataType": "json",
+                    "authorization": Cookies.get("authorization")
                 }}).then((res: any) => {
         if (res.status === 200 && res.data) {
             props.saveSuccess(res)

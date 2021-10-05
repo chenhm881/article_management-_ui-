@@ -6,26 +6,42 @@ import {Col, Row} from "antd";
 import {BrowserRouter as Router, Route, RouteComponentProps, Switch, withRouter} from "react-router-dom";
 import Categories from "../components/Categories";
 import Tags from "../components/Tags";
-import BTab from "./BTab";
 import Articles from "./Articles";
+import Blog from "./Blog";
+import About from "./About";
+import {getCookie, getParamByName, getUsernameFromUrl} from "../ajax/methods";
 
 const Index = (props: RouteComponentProps | any) => {
     const { route, location } = props;
     const [activeTabKey, setActiveTabKey] = useState(location.pathname);
     const contentHeight = document.body.clientHeight - 64 -62;
+    let tabKey = /\/blog\/\d+/.test(activeTabKey) ? '/blog/:id' : activeTabKey;
 
     let renderContent = () => {
-        switch (activeTabKey) {
+        switch (tabKey) {
             case '/articles':
                 return <Articles />;
-            case '/2':
+            case '/archive':
                 return <Articles />;
-            case '/3':
-                return <BTab />;
+            case '/about':
+                return <About />;
+            case '/blog/:id':
+                return <Blog />;
             default:
                 return <div></div>;
         }
     }
+
+    let value = getCookie("authorization");
+    let existed = value ? value !== "undefined" : false;
+    if (!existed) {
+        let token =  getParamByName("access_token", window.location.href);
+        if (token) {
+            document.cookie = `authorization=bearer ${token}`;
+            document.cookie = "username=" + getUsernameFromUrl("Username", window.location.href);
+        }
+    }
+
 
   let onTabChange = (pathname: string) => {
       props.history.push({

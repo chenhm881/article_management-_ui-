@@ -8,7 +8,6 @@ import {listCategorySuccess, listFailure} from "../redux/categories";
 import {withRouter} from "react-router-dom";
 import {getCategories} from "../ajax/categories";
 
-
 interface PropsInterface extends RouteConfigComponentProps<any> {
     categories: [{[key: string]: any}],
     message: string,
@@ -62,11 +61,6 @@ class Categories extends React.Component<PropsInterface, StateInterface> {
                         src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
                     />
                 }
-                actions={[
-                    <SettingOutlined key="setting"/>,
-                    <EditOutlined key="edit"/>,
-                    <EllipsisOutlined key="ellipsis"/>,
-                ]}
             >
                 <div className="article-tags">
                     <span>{
@@ -93,7 +87,6 @@ const mapStateToProps = (state: any) => {
         message: message
     }
 };
-
 
 const mapDispatcherToProps = (dispatch: Dispatch) => ({
     listCategorySuccess: (payload: any) => dispatch(listCategorySuccess(payload)),

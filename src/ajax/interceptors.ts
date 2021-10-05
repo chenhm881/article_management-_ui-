@@ -9,7 +9,6 @@ const instance = axios.create({
 
 instance.interceptors.request.use((config: any) => {
     return config;
-
 }, function (error) {
     // Do something with request error
     return Promise.reject(error)

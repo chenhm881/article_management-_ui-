@@ -62,11 +62,6 @@ class Tags extends React.Component<PropsInterface, StateInterface> {
                         src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
                     />
                 }
-                actions={[
-                    <SettingOutlined key="setting"/>,
-                    <EditOutlined key="edit"/>,
-                    <EllipsisOutlined key="ellipsis"/>,
-                ]}
             >
                 <div className="article-tags">
                     <span>{
@@ -94,12 +89,10 @@ const mapStateToProps = (state: any) => {
     }
 };
 
-
 const mapDispatcherToProps = (dispatch: Dispatch) => ({
     listTagSuccess: (payload: any) => dispatch(listTagSuccess(payload)),
     listFailure: (payload: any) => dispatch(listFailure(payload))
 });
-
 
 export default connect(
     mapStateToProps,

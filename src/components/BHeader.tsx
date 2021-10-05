@@ -10,27 +10,28 @@ import {
 import {
     AndroidOutlined,
     AppleOutlined,
-    CaretDownOutlined,
-    FormOutlined
+    FormOutlined, SmileOutlined
 } from "@ant-design/icons";
 import Cookies from 'js-cookie';
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
-import {loginSuccess} from "../redux/user";
+import {loginSuccess, logoutSuccess} from "../redux/user";
 import {RouteComponentProps, withRouter} from 'react-router-dom';
-import Link from 'antd/lib/typography/Link';
+import {login, logout} from "../ajax/users";
 
 const { Header } = Layout;
 const { TabPane } = Tabs;
 
 type IProps = {
     name: string,
-    loginTodo: (name: string) => void
+    loginTodo: (name: string) => void,
+    logoutTodo: (name: string) => void
 }
 
 interface PropsInterface extends RouteComponentProps<any> {
     name: string,
     loginTodo: (name: string) => void,
+    logoutTodo: (payload: any) => void,
     onTabChange: (pathname: string)=> void
 }
 
@@ -60,14 +61,14 @@ export interface IStoreState {
 }
 
 export interface IUserName {
-    name: string,
+    name: string
 }
 
 class BHeader extends React.Component<PropsInterface> {
 
     handleChange = () => {
         this.props.loginTodo("name");
-        alert("hello");
+        login();
     };
 
     handleTabChange = (val: any) => {
@@ -76,19 +77,23 @@ class BHeader extends React.Component<PropsInterface> {
         this.props.onTabChange(`/${val}`);
 
     }
+    handleLogout = () => {
+        Cookies.remove("authorization")
+        Cookies.remove("username")
+        Cookies.remove("userid")
+        logout()
+    }
 
     render() {
       const {name, location} = this.props;
+      let tabKey = /\/blog\/\d+/.test(location.pathname) ? '/blog/:id' : location.pathname;
+      let defaultTab = tabKey.slice(1);
       const menu = (
           <Menu>
               <Menu.Item key={2}>
           <span
               className="user-logout"
-              onClick={() => {
-                  Cookies.remove("token")
-                  Cookies.remove("username")
-                  Cookies.remove("user_id")
-              }}
+              onClick={this.handleLogout}
           >
             退出登录
           </span>
@@ -96,13 +101,13 @@ class BHeader extends React.Component<PropsInterface> {
           </Menu>
       );
     return (
-            <Tabs defaultActiveKey={location.pathname.slice(1)}
+            <Tabs defaultActiveKey={defaultTab}
                   centered
                   tabBarExtraContent={{
-                      left: <Button className="tabs-extra-demo-button">Left Extra Action</Button>,
+                      left: <React.Fragment><div><span style={{fontSize: 36, color: "red"}}>明书</span></div></React.Fragment>,
                       right: <React.Fragment><div
                                       className="nav-auth"
-                                      style={{display: Cookies.get("token") ? 'none' : 'none'}}
+                                      style={{display: Cookies.get("username") ? 'none' : 'block'}}
                                   >
                                       <Button
                                           ghost
@@ -111,15 +116,15 @@ class BHeader extends React.Component<PropsInterface> {
                                           style={{marginRight: 20}}
                                           onClick={this.handleChange}
                                       >
-                                          登录{name}
+                                          登录
                                       </Button>
                                   </div>
                                   <div
                                       className="user-info"
-                                      style={{display: Cookies.get("token") ? 'flex' : 'flex'}}
+                                      style={{display: Cookies.get("username") ? 'flex' : 'none'}}
                                   >   <Row>
                                       <Col style={{ marginRight: 10}}>
-                                          <Button type="primary" icon={<FormOutlined />} onClick={ () => {
+                                          <Button type="text" icon={<FormOutlined />} onClick={ () => {
                                               this.props.history.push(`/publish`);
                                           }}/>
                                       </Col>
@@ -134,7 +139,7 @@ class BHeader extends React.Component<PropsInterface> {
                                               size="large"
                                               style={{backgroundColor: 'rgb(255, 191, 0)'}}
                                           >
-                                              {Cookies.get("username") ? "" : "huiming"}
+                                              {Cookies.get("username")}
                                           </Avatar>
                                       </Dropdown>
                                       </Col>
@@ -155,18 +160,18 @@ class BHeader extends React.Component<PropsInterface> {
                       <AndroidOutlined />
                       归档
                     </span>
-                } key="2"/>
+                } key="archive"/>
                 <TabPane tab={
                     <span>
-                      <AndroidOutlined />
+                      <SmileOutlined />
                       关于
                     </span>
-                } key="3"/>
+                } key="about"/>
+                <TabPane key={"blog/:id"}/>
             </Tabs>
     );
   }
 }
-
 
 // 将 reducer 中的状态插入到组件的 props 中
 const mapStateToProps = (state: any) => {
@@ -177,7 +182,8 @@ const mapStateToProps = (state: any) => {
 
 // 将 对应action 插入到组件的 props 中
 const mapDispatcherToProps = (dispatch: Dispatch) => ({
-    loginTodo: (name: string) => dispatch(loginSuccess(name))
+    loginTodo: (name: string) => dispatch(loginSuccess(name)),
+    logoutTodo: (name: string) => dispatch(logoutSuccess(name))
 });
 
 export default connect(

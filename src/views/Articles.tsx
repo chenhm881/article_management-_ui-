@@ -1,5 +1,5 @@
-import { List, Avatar, Space } from 'antd';
-import { MessageOutlined, LikeOutlined, StarOutlined } from '@ant-design/icons';
+import {List, Avatar, Space, Button, Col} from 'antd';
+import {MessageOutlined, LikeOutlined, StarOutlined, FormOutlined} from '@ant-design/icons';
 import React from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
@@ -7,6 +7,9 @@ import {withRouter} from "react-router-dom";
 import {listFailure, listSuccess} from "../redux/articles";
 import {getArticleList} from "../ajax/articles";
 import {RouteConfigComponentProps} from "react-router-config";
+import marked from "marked";
+import {get} from "http";
+import Cookies from "js-cookie";
 
 interface PropsInterface extends RouteConfigComponentProps<any> {
     articles: [{[key: string]: any}],
@@ -50,16 +53,17 @@ class Articles extends React.Component<PropsInterface> {
                         key={item.id}
                         actions={[
                             <Space>
-                                {React.createElement(StarOutlined)}
+                                {React.createElement(MessageOutlined)}
                                 {2}
                             </Space>,
                             <Space>
                                 {React.createElement(LikeOutlined)}
                                 {156}
                             </Space>,
-                            <Space>
-                                {React.createElement(MessageOutlined)}
-                                {156}
+                            <Space style={{display: Cookies.get("username") ? "block" : "none"}}>
+                                <Button type="text" icon={<FormOutlined />} onClick={ () => {
+                                    this.props.history.push(`/publish/${item.id}`);
+                                }}/>
                             </Space>,
                         ]}
                         extra={
@@ -75,7 +79,9 @@ class Articles extends React.Component<PropsInterface> {
                             title={<a href={`/blog/${item.id}`}>{item.title}</a>}
                             description={item.summary}
                         />
-                        {item.content}
+                        <div
+                            dangerouslySetInnerHTML={{ __html: item.content ? marked(item.content) : '' }}
+                        ></div>
                     </List.Item>
                 )}
             />

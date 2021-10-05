@@ -4,6 +4,11 @@ export function getParamByName(name: string, url: string) {
     return match && decodeURIComponent(match[1].replace(/\+/g, ' ').replace('#', ''));
 }
 
+export function getUsernameFromUrl(name: string, url: string) {
+    const match = RegExp('\\[' + name + '=([^,]*)').exec(unescape(url));
+    return match && match[1];
+}
+
 export function getCookie(name: string) {
     let value = undefined;
     let arr, reg = new RegExp("(^| )"+name+"=([^;]*)(;|$)");
@@ -27,6 +32,7 @@ export function getAttributeFromCookie(name: string, attribute: string) {
     // eslint-disable-next-line no-constant-condition
     return value ? [function () {
         try {
+            // eslint-disable-next-line
             JSON.parse(value)[attribute];
             return true;
         } catch (e) {

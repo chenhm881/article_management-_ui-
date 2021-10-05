@@ -16,6 +16,7 @@ import {getTags} from "../ajax/tags";
 import {SelectValue} from "antd/lib/select";
 import {listFailure as listCategoryFailure, listCategorySuccess} from "../redux/categories";
 import {listTagSuccess, listFailure as listTagFailure} from "../redux/tags";
+import Cookies from "js-cookie";
 
 
 interface PropsInterface extends RouteConfigComponentProps<any> {
@@ -75,6 +76,9 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
     }
 
     componentDidMount() {
+        if (!Cookies.get("username")) {
+            this.props.history.push({pathname: "/about"});
+        }
         let match =this.props.match.params
         if (match.id ) {this.getArticle(match.id);}
         getCategories("", this.props);
