@@ -8,7 +8,7 @@ import {
     Avatar, Menu, Tabs,
 } from 'antd';
 import {
-    AndroidOutlined,
+    AndroidOutlined, AntDesignOutlined,
     AppleOutlined,
     FormOutlined, SmileOutlined
 } from "@ant-design/icons";
@@ -18,6 +18,7 @@ import {Dispatch} from "redux";
 import {loginSuccess, logoutSuccess} from "../redux/user";
 import {RouteComponentProps, withRouter} from 'react-router-dom';
 import {login, logout} from "../ajax/users";
+import profile from "../assets/avatar.png"
 
 const { Header } = Layout;
 const { TabPane } = Tabs;
@@ -80,7 +81,6 @@ class BHeader extends React.Component<PropsInterface> {
     handleLogout = () => {
         Cookies.remove("authorization")
         Cookies.remove("username")
-        Cookies.remove("userid")
         logout()
     }
 
@@ -108,26 +108,37 @@ class BHeader extends React.Component<PropsInterface> {
                       right: <React.Fragment><div
                                       className="nav-auth"
                                       style={{display: Cookies.get("username") ? 'none' : 'block'}}
-                                  >
-                                      <Button
-                                          ghost
-                                          type="primary"
-                                          size="small"
-                                          style={{marginRight: 20}}
-                                          onClick={this.handleChange}
-                                      >
-                                          登录
-                                      </Button>
+                                  > <Row>
+
+                                      <Col>
+                                                  <Button
+                                                      ghost
+                                                      type="primary"
+                                                      size="small"
+                                                      style={{marginRight: 20}}
+                                                      onClick={this.handleChange}
+                                                  >
+                                                      注册
+                                                  </Button>
+                                      </Col>
+                                    <Col>
+                                        <Button
+                                            ghost
+                                            type="primary"
+                                            size="small"
+                                            style={{marginRight: 20}}
+                                            onClick={this.handleChange}
+                                        >
+                                            登录
+                                        </Button>
+                                    </Col>
+                                  </Row>
                                   </div>
                                   <div
                                       className="user-info"
                                       style={{display: Cookies.get("username") ? 'flex' : 'none'}}
                                   >   <Row>
-                                      <Col style={{ marginRight: 10}}>
-                                          <Button type="text" icon={<FormOutlined />} onClick={ () => {
-                                              this.props.history.push(`/publish`);
-                                          }}/>
-                                      </Col>
+
                                       <Col>
                                           <Dropdown
                                           placement="bottomCenter"
@@ -136,12 +147,17 @@ class BHeader extends React.Component<PropsInterface> {
                                           <Avatar
                                               className="user-avatar"
                                               shape="square"
-                                              size="large"
-                                              style={{backgroundColor: 'rgb(255, 191, 0)'}}
+                                              icon={<AntDesignOutlined />}
+                                              src={profile}
                                           >
                                               {Cookies.get("username")}
                                           </Avatar>
                                       </Dropdown>
+                                      </Col>
+                                      <Col style={{ marginLeft: 20, marginRight: 20}}>
+                                          <Button type="text" icon={<FormOutlined />} onClick={ () => {
+                                              this.props.history.push(`/publish`);
+                                          }}/>
                                       </Col>
                                   </Row>
 

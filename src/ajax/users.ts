@@ -1,6 +1,6 @@
 
 export function login() {
-    window.location.href = "http://localhost:8771/oauth/authorize?client_id=article&client_secret=123&redirect_uri=http://localhost:3000/about&response_type=token&scope=all&state=abc";
+    window.location.href = "http://localhost:8771/oauth/authorize?response_type=code&client_id=blog&client_secret=123&redirect_uri=http://localhost:8181/authorize/login&scope=all";
 };
 
 export function logout() {

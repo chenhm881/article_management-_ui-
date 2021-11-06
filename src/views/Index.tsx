@@ -38,7 +38,7 @@ const Index = (props: RouteComponentProps | any) => {
         let token =  getParamByName("access_token", window.location.href);
         if (token) {
             document.cookie = `authorization=bearer ${token}`;
-            document.cookie = "username=" + getUsernameFromUrl("Username", window.location.href);
+            document.cookie = "username=" + getParamByName("username", window.location.href);
         }
     }
 

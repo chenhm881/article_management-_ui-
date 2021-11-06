@@ -1,11 +1,11 @@
 
 export function getParamByName(name: string, url: string) {
-    const match = RegExp('[?#|?&]' + name + '=([^&]*)').exec(url);
-    return match && decodeURIComponent(match[1].replace(/\+/g, ' ').replace('#', ''));
+    const match = RegExp( name + '=([^&]*)').exec(url);
+    return match && match[1];
 }
 
 export function getUsernameFromUrl(name: string, url: string) {
-    const match = RegExp('\\[' + name + '=([^,]*)').exec(unescape(url));
+    const match = RegExp('\\access_token=[^&]*').exec(unescape(url));
     return match && match[1];
 }
 

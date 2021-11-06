@@ -1,10 +1,11 @@
 import instance from "./interceptors";
 import Cookies from "js-cookie";
+import client from "../config/client";
 
 
 export function getArticleList(query: any, props: any) {
     instance
-        .post('http://localhost:8181/articles',
+        .post(`${client.endpoint}/articles`,
             JSON.stringify(query),
             {timeout: 86400000, headers: {
                     'Content-type': "application/json",
@@ -24,7 +25,7 @@ export function getArticleList(query: any, props: any) {
 export function save(data: any, props: any) {
     const qs = require("qs");
     instance
-        .post('http://localhost:8181/saveArticle',
+        .post(`${client.endpoint}/saveArticle`,
             JSON.stringify(data),
             {timeout: 86400000, headers: {
                     'Content-type': "application/json",
@@ -44,7 +45,7 @@ export function save(data: any, props: any) {
 
 export function find(id: number, props: any) {
     instance
-        .get(`http://localhost:8181/article/${id}`,
+        .get(`${client.endpoint}/article/${id}`,
             {timeout: 86400000, headers: {
                     "dataType": "json",
                 }}).then((res: any) => {

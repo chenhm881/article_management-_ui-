@@ -23,6 +23,7 @@ interface PropsInterface extends RouteConfigComponentProps<any> {
 class Articles extends React.Component<PropsInterface> {
 
     componentDidMount() {
+       console.log(process.env);
        this.getArticles();
     }
 
