@@ -38,7 +38,7 @@
   },
   "scripts": {
     "start:dev": "concurrently \" nodemon --ignore 'public/*' server/server.js\" \"npm run start\"",
-    "start": "react-scripts start",
+    "start": "dotenv -e .env/.env.local react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
@@ -80,6 +80,7 @@
     "@types/express": "^4.17.13",
     "@types/js-cookie": "^2.2.7",
     "@types/react-router-config": "^5.0.3",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "less": "^4.1.2",
     "less-loader": "^10.0.1"

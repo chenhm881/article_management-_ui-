@@ -1,9 +1,10 @@
 import instance from "./interceptors";
+import client from "../config/client";
 
 
 export function getTags(query: any, props: any) {
     instance
-        .post('http://localhost:8181/tags',
+        .post(`${client.endpoint}/tags`,
             JSON.stringify(query),
             {timeout: 86400000, headers: {
                     'Content-type': "application/json",
