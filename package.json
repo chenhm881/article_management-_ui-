@@ -37,8 +37,9 @@
     "web-vitals": "^1.1.2"
   },
   "scripts": {
-    "start:dev": "concurrently \" nodemon --ignore 'public/*' server/server.js\" \"npm run start\"",
-    "start": "dotenv -e .env/.env.local react-scripts start",
+    "start:local": "dotenv -e .env/.env.local concurrently \" nodemon --ignore 'public/*' server/server.js\" \"npm run start\"",
+    "start:dev": "dotenv -e .env/.env.development react-scripts start",
+    "start:prod": "dotenv -e .env/.env.production react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

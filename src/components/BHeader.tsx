@@ -189,6 +189,7 @@ class BHeader extends React.Component<PropsInterface> {
   }
 }
 
+
 // 将 reducer 中的状态插入到组件的 props 中
 const mapStateToProps = (state: any) => {
     return {
