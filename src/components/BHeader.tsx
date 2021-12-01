@@ -79,9 +79,10 @@ class BHeader extends React.Component<PropsInterface> {
 
     }
     handleLogout = () => {
+        const authorization = Cookies.get("authorization");
         Cookies.remove("authorization")
         Cookies.remove("username")
-        logout()
+        logout(authorization)
     }
 
     render() {
@@ -116,7 +117,9 @@ class BHeader extends React.Component<PropsInterface> {
                                                       type="primary"
                                                       size="small"
                                                       style={{marginRight: 20}}
-                                                      onClick={this.handleChange}
+                                                      onClick={ () => {
+                                                          this.props.history.push('/register')
+                                                      }}
                                                   >
                                                       注册
                                                   </Button>

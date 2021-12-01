@@ -67,6 +67,8 @@ class Categories extends React.Component<PropsInterface, StateInterface> {
                         categories && categories!.map((v: {[key: string]: any} ) => (
                             <Tag
                                 key={v.categoryId}
+                                className={"article-tag"}
+                                style={{marginBottom: "8px"}}
                                 color={this.color[Math.floor(Math.random()*this.color.length)]}
                                 onClick={()=>{}}
                             >

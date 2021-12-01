@@ -112,7 +112,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
         };
 
         const onFinish = (values: any)=> {
-            let match =this.props.match.params;
+            let match = this.props.match.params;
             let data = values.article;
             if (match.id) {
                 data.id = match.id;

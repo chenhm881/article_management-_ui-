@@ -2,7 +2,7 @@ import React from 'react';
 import {Card, Col, Layout, Row} from 'antd';
 import {connect} from "react-redux";
 import {GithubOutlined, MailOutlined} from "@ant-design/icons";
-
+import "../App.scss";
 const { Footer } = Layout;
 
 class About extends React.Component<any> {

@@ -33,6 +33,7 @@ class Articles extends React.Component<PropsInterface> {
 
     render() {
         const {articles, totalSize, message} = this.props;
+        let oDiv;
         return (
             <List
                 itemLayout="vertical"
@@ -62,27 +63,27 @@ class Articles extends React.Component<PropsInterface> {
                                 {156}
                             </Space>,
                             <Space style={{display: Cookies.get("username") ? "block" : "none"}}>
-                                <Button type="text" icon={<FormOutlined />} onClick={ () => {
+                                <Button type="text" icon={<FormOutlined/>} onClick={() => {
                                     this.props.history.push(`/publish/${item.id}`);
                                 }}/>
                             </Space>,
                         ]}
                         extra={
-                            <img
-                                width={272}
-                                alt="logo"
-                                src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-                            />
+                            <span/>
                         }
                     >
                         <List.Item.Meta
-                            avatar={<Avatar src={item.avatar} />}
+                            avatar={<Avatar src={item.avatar}/>}
                             title={<a href={`/blog/${item.id}`}>{item.title}</a>}
                             description={item.summary}
                         />
-                        <div
-                            dangerouslySetInnerHTML={{ __html: item.content ? marked(item.content) : '' }}
-                        ></div>
+                        <div>
+                            {(() => {
+                                let oDiv = document.createElement('div');
+                                oDiv.innerHTML = item.content;
+                                return oDiv.innerText.slice(0, 200);
+                            })()}
+                        </div>
                     </List.Item>
                 )}
             />

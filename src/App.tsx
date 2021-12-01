@@ -4,6 +4,7 @@ import {renderRoutes} from "react-router-config";
 import router from './router/index';
 import Publish from "./views/Publish";
 import Index from './views/Index';
+import Register from "./views/Register";
 
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
               <Route exact={true} path={"/publish"} component= {Publish}></Route>
               <Route exact={true} path={"/publish/:id"} component= {Publish}></Route>
               <Route exact={true} path={"/blog/:id"} component= {Index}></Route>
+              <Route exact={true} path={"/register"} component= {Register}></Route>
               {renderRoutes(router)}
           </Switch>
       </Router>

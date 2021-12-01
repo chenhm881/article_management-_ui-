@@ -32,7 +32,7 @@ export function save(data: any, props: any) {
                     "dataType": "json",
                     "authorization": Cookies.get("authorization")
                 }}).then((res: any) => {
-        if (res.status === 200 && res.data) {
+        if (res && res.status === 200 && res.data) {
             props.saveSuccess(res)
         } else {
             props.saveFailure(res)
@@ -49,7 +49,7 @@ export function find(id: number, props: any) {
             {timeout: 86400000, headers: {
                     "dataType": "json",
                 }}).then((res: any) => {
-        if (res.status === 200 && res.data) {
+        if (res && res.status === 200 && res.data) {
             props.findSuccess(res)
         } else {
             props.findFailure(res)

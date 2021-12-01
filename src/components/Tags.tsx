@@ -8,7 +8,6 @@ import {listFailure, listTagSuccess} from "../redux/tags";
 import {withRouter} from "react-router-dom";
 import {getTags} from "../ajax/tags";
 
-
 interface PropsInterface extends RouteConfigComponentProps<any> {
     tags: [{[key: string]: any}],
     message: string,
@@ -64,17 +63,19 @@ class Tags extends React.Component<PropsInterface, StateInterface> {
                 }
             >
                 <div className="article-tags">
-                    <span>{
+                    <div>{
                         tags && tags!.map((v: {[key: string]: any} ) => (
                         <Tag
                             key={v.tagId}
+                            className={"article-tag"}
+                            style={{marginBottom: "8px"}}
                             color={this.color[Math.floor(Math.random()*this.color.length)]}
                             onClick={()=>{}}
                         >
                             {v.tagName}
                         </Tag>
                     ))}
-                </span>
+                </div>
                 </div>
             </Card>
         )

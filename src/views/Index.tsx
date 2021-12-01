@@ -10,6 +10,7 @@ import Articles from "./Articles";
 import Blog from "./Blog";
 import About from "./About";
 import {getCookie, getParamByName, getUsernameFromUrl} from "../ajax/methods";
+import "./../styles/index.scss";
 
 const Index = (props: RouteComponentProps | any) => {
     const { route, location } = props;

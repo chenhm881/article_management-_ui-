@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {getCookie, getParamByName} from "./methods";
+import {login} from "./users";
 
 const instance = axios.create({
     baseURL: 'http://localhost:8080',
@@ -20,9 +21,8 @@ instance.interceptors.response.use(res => {
     return data
 }, error => {
     console.log(error.message);
-    //let code = error.response.status;
-    if (error.response && error.response.status === 403) {
-        console.log(error.response);
+    if (error.response && [401,403].includes(error.response.status)) {
+        login();
     }
 });
 
