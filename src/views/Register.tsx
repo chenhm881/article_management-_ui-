@@ -42,27 +42,15 @@ const tailFormItemLayout = {
 };
 
 interface PropsInterface extends RouteConfigComponentProps<any> {
-    article: {[key: string]: any},
-    tags: number[],
+    user: {[key: string]: any},
     message: string,
-    category: string,
-    listTag: [{[key: string]: any}],
-    listCategory: [{[key: string]: any}]
-    saveSuccess: (payload: any) => void,
-    saveFailure: (payload: any) => void,
-    findSuccess: (payload: any) => void,
-    findFailure: (payload: any) => void,
-    listCategorySuccess: (payload: any) => void,
-    listCategoryFailure: (payload: any) => void
-    listTagSuccess: (payload: any) => void,
-    listTagFailure: (payload: any) => void
 }
 
 const mapStateToProps = (state: any) => {
-    const {user, msg } = state.userStore;
+    const {user, message } = state.userStore;
     return {
         user: user,
-        msg: msg
+        msg: message
     }
 };
 
@@ -84,7 +72,7 @@ export default connect(
 
     const [autoCompleteResult, setAutoCompleteResult] = useState([]);
 
-    const {article, category, tags, listCategory, listTag} = props;
+    const {user, message} = props;
 
     return (
         <Form

@@ -15,7 +15,7 @@ const REGISTER_FAILURE = 'REGISTER_FAILURE'
  */
 const initState = {
   user: '',
-  msg: '',
+  message: '',
   refresh: 1,
   name: 'initName'
 }
@@ -35,21 +35,21 @@ export function user(state=initState, action: any) {
     case REGISTER_SUCCESS:
       return {
         ...state,
-        user: '',
-        msg: action.payload.msg
+        user: action.payload.data,
+        message: action.payload.message
       }
     case LOGOUT:
       return {
         user: '',
-        msg: '',
+        message: '',
         refresh: 0
       }
     case LOGIN_FAILURE:
     case REGISTER_FAILURE:
       return {
         ...state,
-        user: '',
-        msg: action.payload
+        user: action.payload.data,
+        message: action.payload.message
       }
     default:
       return state
