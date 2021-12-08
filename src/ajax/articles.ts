@@ -34,6 +34,7 @@ export function save(data: any, props: any) {
                 }}).then((res: any) => {
         if (res && res.status === 200 && res.data) {
             props.saveSuccess(res)
+            props.history.push("/articles")
         } else {
             props.saveFailure(res)
         }
