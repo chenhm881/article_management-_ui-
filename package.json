@@ -40,7 +40,7 @@
     "start:local": "dotenv -e .env/.env.local concurrently \" nodemon --ignore 'public/*' server/server.js\" \"npm run start\"",
     "start:dev": "dotenv -e .env/.env.development react-scripts start",
     "start:prod": "dotenv -e .env/.env.production react-scripts start",
-    "build": "react-scripts build",
+    "build": "dotenv -e .env/.env.production react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

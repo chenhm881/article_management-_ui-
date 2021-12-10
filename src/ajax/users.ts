@@ -2,11 +2,11 @@ import instance from "./interceptors";
 import client from "../config/client";
 
 export function login() {
-    window.location.href = "http://localhost:8181/authorize/login";
+    window.location.href = `${client.endpoint}/authorize/login`;
 };
 
 export function logout(authorization: string | undefined) {
-    window.location.href = `http://localhost:8181/logout?authorization=${authorization}`;
+    window.location.href = `${client.endpoint}/logout?authorization=${authorization}`;
 }
 
 export function register(data: any, props: any) {
