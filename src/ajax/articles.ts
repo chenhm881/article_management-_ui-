@@ -25,7 +25,7 @@ export function getArticleList(query: any, props: any) {
 export function save(data: any, props: any) {
     const qs = require("qs");
     instance
-        .post(`${client.endpoint}/save`,
+        .post(`${client.endpoint}/article/save`,
             JSON.stringify(data),
             {timeout: 86400000, headers: {
                     'Content-type': "application/json",
