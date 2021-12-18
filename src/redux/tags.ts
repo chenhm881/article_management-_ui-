@@ -26,7 +26,7 @@ export function tags(state= initState, action: any) {
         tag: action.payload.data,
         message: action.payload.message,
       }
-    case 'SAVE_SUCCESS':
+    case 'SAVE_TAG_SUCCESS':
       return {
         ...state,
         tag: action.payload.data,
@@ -40,7 +40,7 @@ export function tags(state= initState, action: any) {
 /**
  * action
  */
-export function listTagSuccess(payload: any) {
+export function listSuccess(payload: any) {
   return {
     type: 'LIST_TAG_SUCCESS',
     payload: payload
@@ -49,35 +49,35 @@ export function listTagSuccess(payload: any) {
 
 export function listFailure(payload: any) {
   return {
-    type: 'LIST_FAILURE',
+    type: 'FIND_TAG_SUCCESS',
     payload: payload
   }
 }
 
 export function findSuccess(payload: any) {
   return {
-    type: 'FIND_SUCCESS',
+    type: 'FIND_TAG_SUCCESS',
     payload: payload
   }
 }
 
 export function findFailure(payload: any) {
   return {
-    type: 'FIND_FAILURE',
+    type: 'FIND_TAG_FAILURE',
     payload: payload
   }
 }
 
 export function saveSuccess(payload: any) {
   return {
-    type: 'SAVE_SUCCESS',
+    type: 'SAVE_TAG_SUCCESS',
     payload: payload
   }
 }
 
 export function saveFailure(data: any) {
   return {
-    type: 'SAVE_FAILURE',
+    type: 'SAVE_TAG_FAILURE',
     payload: data
   }
 }

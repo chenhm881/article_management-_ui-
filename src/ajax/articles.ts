@@ -6,7 +6,7 @@ import client from "../config/client";
 export function getArticleList(query: any, props: any) {
     instance
         .post(`${client.endpoint}/articles`,
-            JSON.stringify(query),
+             query,
             {timeout: 86400000, headers: {
                     'Content-type': "application/json",
                     "dataType": "json",

@@ -4,14 +4,14 @@ import React from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {RouteConfigComponentProps} from "react-router-config";
-import {listCategorySuccess, listFailure} from "../redux/categories";
+import {listSuccess as listCategorySuccess, listFailure as listCategoryFailure} from "../redux/categories";
 import {withRouter} from "react-router-dom";
 import {getCategories} from "../ajax/categories";
 
 interface PropsInterface extends RouteConfigComponentProps<any> {
     categories: [{[key: string]: any}],
     message: string,
-    listCategorySuccess: (payload: any) => void,
+    listSuccess: (payload: any) => void,
     listFailure: (payload: any) => void
 }
 
@@ -91,8 +91,8 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatcherToProps = (dispatch: Dispatch) => ({
-    listCategorySuccess: (payload: any) => dispatch(listCategorySuccess(payload)),
-    listFailure: (payload: any) => dispatch(listFailure(payload))
+    listSuccess: (payload: any) => dispatch(listCategorySuccess(payload)),
+    listFailure: (payload: any) => dispatch(listCategoryFailure(payload))
 });
 
 

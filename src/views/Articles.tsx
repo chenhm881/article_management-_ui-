@@ -13,7 +13,6 @@ import Cookies from "js-cookie";
 
 interface PropsInterface extends RouteConfigComponentProps<any> {
     articles: [{[key: string]: any}],
-    tags: [string],
     totalSize: number,
     message: string,
     listSuccess: (payload: any) => void,
@@ -28,7 +27,7 @@ class Articles extends React.Component<PropsInterface> {
     }
 
     getArticles() {
-        getArticleList({pageSize: 3, page: 1},this.props)
+        getArticleList(null, this.props)
     }
 
     render() {
@@ -92,11 +91,10 @@ class Articles extends React.Component<PropsInterface> {
 }
 
 const mapStateToProps = (state: any) => {
-    const {articles, message, tags, totalSize } = state.blogStore;
+    const {articles, message, totalSize } = state.blogStore;
     return {
         articles: articles,
         message: message,
-        tags:tags,
         totalSize: totalSize
     }
 };

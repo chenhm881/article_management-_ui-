@@ -14,8 +14,8 @@ import {find, save} from "../ajax/articles";
 import {getCategories} from "../ajax/categories";
 import {getTags} from "../ajax/tags";
 import {SelectValue} from "antd/lib/select";
-import {listFailure as listCategoryFailure, listCategorySuccess} from "../redux/categories";
-import {listTagSuccess, listFailure as listTagFailure} from "../redux/tags";
+import {listSuccess as listCategorySuccess, listFailure as listCategoryFailure} from "../redux/categories";
+import {listSuccess as listTagSuccess, listFailure as listTagFailure} from "../redux/tags";
 import Cookies from "js-cookie";
 
 
@@ -163,7 +163,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
                     options={listCategory.map(({categoryId, categoryName}) => ({value: categoryId, label: categoryName}))}
                 />
             </Form.Item>
-            <Form.Item name={[ 'tags']} label="Tags">
+            <Form.Item name={['article', 'tags']} label="Tags">
                 <Select
                     mode="multiple"
                     style={{ width: '100%' }}

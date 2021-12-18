@@ -4,15 +4,19 @@ import React from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {RouteConfigComponentProps} from "react-router-config";
-import {listFailure, listTagSuccess} from "../redux/tags";
+import {listFailure, listSuccess} from "../redux/tags";
 import {withRouter} from "react-router-dom";
 import {getTags} from "../ajax/tags";
+import {getArticleList} from "../ajax/articles";
+import {listSuccess as listArticleSuccess, listFailure as ListArticleFailure} from "../redux/articles";
 
 interface PropsInterface extends RouteConfigComponentProps<any> {
     tags: [{[key: string]: any}],
     message: string,
-    listTagSuccess: (payload: any) => void,
-    listFailure: (payload: any) => void
+    listSuccess: (payload: any) => void,
+    listFailure: (payload: any) => void,
+    listArticleSuccess: (payload: any) => void,
+    ListArticleFailure: (payload: any) => void,
 }
 
 interface StateInterface {
@@ -48,7 +52,15 @@ class Tags extends React.Component<PropsInterface, StateInterface> {
     }
 
     getTags() {
-        getTags({pageSize: 3, page: 1},this.props)
+        getTags(null, this.props)
+    }
+
+    onArticleFilter(evt: any, id: number) {
+        let params = {
+            listSuccess: this.props.listArticleSuccess,
+            listFailure: this.props.ListArticleFailure
+        }
+        getArticleList({tagId: id},  params);
     }
 
     render() {
@@ -66,11 +78,11 @@ class Tags extends React.Component<PropsInterface, StateInterface> {
                     <div>{
                         tags && tags!.map((v: {[key: string]: any} ) => (
                         <Tag
-                            key={v.tagId}
+                            key={v.id}
                             className={"article-tag"}
                             style={{marginBottom: "8px"}}
                             color={this.color[Math.floor(Math.random()*this.color.length)]}
-                            onClick={()=>{}}
+                            onClick={(evt) => this.onArticleFilter(evt, v.id)}
                         >
                             {v.tagName}
                         </Tag>
@@ -91,8 +103,10 @@ const mapStateToProps = (state: any) => {
 };
 
 const mapDispatcherToProps = (dispatch: Dispatch) => ({
-    listTagSuccess: (payload: any) => dispatch(listTagSuccess(payload)),
-    listFailure: (payload: any) => dispatch(listFailure(payload))
+    listSuccess: (payload: any) => dispatch(listSuccess(payload)),
+    listFailure: (payload: any) => dispatch(listFailure(payload)),
+    listArticleSuccess: (payload: any) => dispatch(listArticleSuccess(payload)),
+    ListArticleFailure: (payload: any) => dispatch(ListArticleFailure(payload))
 });
 
 export default connect(

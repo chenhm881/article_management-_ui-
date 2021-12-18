@@ -10,7 +10,7 @@ export function getCategories(query: any, props: any) {
                     "dataType": "json",
                 }}).then((res: any) => {
         if (res.status === 200 && res.data) {
-            props.listCategorySuccess(res)
+            props.listSuccess(res)
         } else {
             props.listFailure(res)
         }

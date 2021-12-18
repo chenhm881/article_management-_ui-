@@ -20,13 +20,13 @@ export function categories(state= initState, action: any) {
         message: action.payload.message,
         totalSize: action.payload.data.length
       }
-    case 'FIND_SUCCESS':
+    case 'FIND_CATEGORY_SUCCESS':
       return {
         ...state,
         category: action.payload.data,
         message: action.payload.message,
       }
-    case 'SAVE_SUCCESS':
+    case 'SAVE_CATEGORY_SUCCESS':
       return {
         ...state,
         category: action.payload.data,
@@ -40,7 +40,7 @@ export function categories(state= initState, action: any) {
 /**
  * action
  */
-export function listCategorySuccess(payload: any) {
+export function listSuccess(payload: any) {
   return {
     type: 'LIST_CATEGORY_SUCCESS',
     payload: payload
@@ -49,35 +49,35 @@ export function listCategorySuccess(payload: any) {
 
 export function listFailure(payload: any) {
   return {
-    type: 'LIST_FAILURE',
+    type: 'LIST_CATEGORY_FAILURE',
     payload: payload
   }
 }
 
 export function findSuccess(payload: any) {
   return {
-    type: 'FIND_SUCCESS',
+    type: 'FIND_CATEGORY_SUCCESS',
     payload: payload
   }
 }
 
 export function findFailure(payload: any) {
   return {
-    type: 'FIND_FAILURE',
+    type: 'FIND_CATEGORY_FAILURE',
     payload: payload
   }
 }
 
 export function saveSuccess(payload: any) {
   return {
-    type: 'SAVE_SUCCESS',
+    type: 'SAVE_CATEGORY_SUCCESS',
     payload: payload
   }
 }
 
 export function saveFailure(data: any) {
   return {
-    type: 'SAVE_FAILURE',
+    type: 'SAVE_CATEGORY_FAILURE',
     payload: data
   }
 }
