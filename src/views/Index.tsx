@@ -11,19 +11,22 @@ import Blog from "./Blog";
 import About from "./About";
 import {getCookie, getParamByName, getUsernameFromUrl} from "../ajax/methods";
 import "./../styles/index.scss";
+import Archive from "./Archive";
 
 const Index = (props: RouteComponentProps | any) => {
-    const { route, location } = props;
+    const { location } = props;
     const [activeTabKey, setActiveTabKey] = useState(location.pathname);
+    const [ query, setQuery ] = useState({});
     const contentHeight = document.body.clientHeight - 64 -62;
     let tabKey = /\/blog\/\d+/.test(activeTabKey) ? '/blog/:id' : activeTabKey;
 
     let renderContent = () => {
         switch (tabKey) {
             case '/articles':
-                return <Articles />;
+                const params: any = {query: query}
+                return <Articles {...params}/>
             case '/archive':
-                return <Articles />;
+                return <Archive />;
             case '/about':
                 return <About />;
             case '/blog/:id':
@@ -51,6 +54,23 @@ const Index = (props: RouteComponentProps | any) => {
       setActiveTabKey(pathname);
   };
 
+  const onTagClick = (query: { [key: string]: any }) => {
+      props.history.push({
+          pathname: "/articles"
+      });
+      setQuery(query);
+      setActiveTabKey("/articles");
+  }
+
+    const onCategoryClick = (query: { [key: string]: any }) => {
+        props.history.push({
+            pathname: "/articles"
+        });
+
+        setQuery(query);
+        setActiveTabKey("/articles");
+    }
+
   return (
     <div>
       <BHeader onTabChange={(pathname: string) => onTabChange(pathname)}/>
@@ -64,11 +84,11 @@ const Index = (props: RouteComponentProps | any) => {
                md={{span: 8}}
                xs={{span: 0}} order={2}>
           <Row style={{margin: 24}}>
-              <Col><Tags></Tags></Col>
+              <Col><Tags onTagClick={(query) => onTagClick(query)}></Tags></Col>
           </Row>
           <Row style={{margin: 24}}>
               <Col>
-                  <Categories/>
+                  <Categories onCategoryClick ={(query) => onCategoryClick(query)}/>
               </Col>
           </Row>
           </Col>

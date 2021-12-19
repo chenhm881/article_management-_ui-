@@ -2,6 +2,7 @@
 const initState = {
   articles: [],
   article: Object.create(null),
+  query: Object.create(null),
   message: '',
   category: 0,
   tags: [],
@@ -35,6 +36,11 @@ export function articles(state= initState, action: any) {
         ...state,
         article: action.payload.data,
         message: action.payload.message
+      }
+    case 'NEW_ARTICLE':
+      return {
+        ...state,
+        article: action.payload.data
       }
     default:
       return state
@@ -86,4 +92,9 @@ export function saveFailure(data: any) {
   }
 }
 
-
+export function newPublish(data: any) {
+  return {
+    type: 'NEW_ARTICLE',
+    payload: data
+  }
+}

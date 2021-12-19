@@ -13,6 +13,7 @@ import {listFailure as ListArticleFailure, listSuccess as listArticleSuccess} fr
 interface PropsInterface extends RouteConfigComponentProps<any> {
     categories: [{[key: string]: any}],
     message: string,
+    onCategoryClick: (query: { [key: string]: any })=> void
     listSuccess: (payload: any) => void,
     listFailure: (payload: any) => void,
     listArticleSuccess: (payload: any) => void,
@@ -52,15 +53,11 @@ class Categories extends React.Component<PropsInterface, StateInterface> {
     }
 
     getCategories() {
-        getCategories({pageSize: 3, page: 1},this.props)
+        getCategories(null, this.props)
     }
 
     onArticleFilter(evt: any, id: number) {
-        let params = {
-            listSuccess: this.props.listArticleSuccess,
-            listFailure: this.props.ListArticleFailure
-        }
-        getArticleList({categoryId: id},  params);
+        this.props.onCategoryClick({categoryId: id});
     }
 
     render() {

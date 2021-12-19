@@ -17,7 +17,9 @@ function App() {
               <Route exact={true} path={"/publish/:id"} component= {Publish}></Route>
               <Route exact={true} path={"/blog/:id"} component= {Index}></Route>
               <Route exact={true} path={"/register"} component= {Register}></Route>
-              {renderRoutes(router)}
+              <Route exact={true} path={"/articles"} component= {Index}></Route>
+              <Route exact={true} path={"/archive"} component= {Index}></Route>
+              <Route exact={true} path={"/about"} component= {Index}></Route>
           </Switch>
       </Router>
   );

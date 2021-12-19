@@ -47,6 +47,7 @@ interface IStateProps {
     id: number;
     isCompleted: boolean;
     title: string;
+    tabKey: string
 }
 interface IDispatcherProps {
     deleteTodo: () => void;
@@ -58,7 +59,8 @@ export interface IStoreState {
     user: string,
     login: boolean,
     register: boolean,
-    nav: string
+    nav: string,
+    tabKey: string
 }
 
 export interface IUserName {
@@ -66,6 +68,11 @@ export interface IUserName {
 }
 
 class BHeader extends React.Component<PropsInterface> {
+
+    constructor(props: PropsInterface | Readonly<PropsInterface>)
+    {
+        super(props);
+    }
 
     handleChange = () => {
         this.props.loginTodo("name");
@@ -102,10 +109,10 @@ class BHeader extends React.Component<PropsInterface> {
           </Menu>
       );
     return (
-            <Tabs defaultActiveKey={defaultTab}
+            <Tabs activeKey={defaultTab}
                   centered
                   tabBarExtraContent={{
-                      left: <React.Fragment><div><span style={{fontSize: 36, color: "red"}}>明书</span></div></React.Fragment>,
+                      left: <React.Fragment><div><span style={{fontSize: 36, color: "red"}}>明博园</span></div></React.Fragment>,
                       right: <React.Fragment><div
                                       className="nav-auth"
                                       style={{display: Cookies.get("username") ? 'none' : 'block'}}
@@ -192,15 +199,12 @@ class BHeader extends React.Component<PropsInterface> {
   }
 }
 
-
-// 将 reducer 中的状态插入到组件的 props 中
 const mapStateToProps = (state: any) => {
     return {
         name: state.userStore.name
     }
 };
 
-// 将 对应action 插入到组件的 props 中
 const mapDispatcherToProps = (dispatch: Dispatch) => ({
     loginTodo: (name: string) => dispatch(loginSuccess(name)),
     logoutTodo: (name: string) => dispatch(logoutSuccess(name))

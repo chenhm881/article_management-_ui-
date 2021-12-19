@@ -10,31 +10,25 @@ import {RouteConfigComponentProps} from "react-router-config";
 import marked from "marked";
 import {get} from "http";
 import Cookies from "js-cookie";
+import {getUserArticleList} from "../ajax/archive";
 
 interface PropsInterface extends RouteConfigComponentProps<any> {
     articles: [{[key: string]: any}],
-    query: {[key: string]: any},
     totalSize: number,
     message: string,
     listSuccess: (payload: any) => void,
     listFailure: (payload: any) => void
 }
 
-class Articles extends React.Component<PropsInterface> {
+class Archive extends React.Component<PropsInterface> {
 
     componentDidMount() {
        console.log(process.env);
-       this.getArticles({}, this.props);
+       this.getArticles();
     }
 
-    UNSAFE_componentWillReceiveProps(nextPros: PropsInterface) {
-        if (nextPros.query !== this.props.query) {
-            this.getArticles(nextPros.query, nextPros)
-        }
-    }
-
-    getArticles(query: {[key: string]: any}, props: PropsInterface) {
-        getArticleList(query, props)
+    getArticles() {
+        getUserArticleList({}, this.props)
     }
 
     render() {
@@ -67,7 +61,12 @@ class Articles extends React.Component<PropsInterface> {
                             <Space>
                                 {React.createElement(LikeOutlined)}
                                 {156}
-                            </Space>
+                            </Space>,
+                            <Space style={{display: Cookies.get("username") ? "block" : "none"}}>
+                                <Button type="text" icon={<FormOutlined/>} onClick={() => {
+                                    this.props.history.push(`/publish/${item.id}`);
+                                }}/>
+                            </Space>,
                         ]}
                         extra={
                             <span/>
@@ -110,5 +109,5 @@ const mapDispatcherToProps = (dispatch: Dispatch) => ({
 export default connect(
     mapStateToProps,
     mapDispatcherToProps
-)(withRouter(Articles));
+)(withRouter(Archive));
 

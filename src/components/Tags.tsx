@@ -17,6 +17,7 @@ interface PropsInterface extends RouteConfigComponentProps<any> {
     listFailure: (payload: any) => void,
     listArticleSuccess: (payload: any) => void,
     ListArticleFailure: (payload: any) => void,
+    onTagClick: (query: { [key: string]: any })=> void
 }
 
 interface StateInterface {
@@ -55,12 +56,9 @@ class Tags extends React.Component<PropsInterface, StateInterface> {
         getTags(null, this.props)
     }
 
+
     onArticleFilter(evt: any, id: number) {
-        let params = {
-            listSuccess: this.props.listArticleSuccess,
-            listFailure: this.props.ListArticleFailure
-        }
-        getArticleList({tagId: id},  params);
+        this.props.onTagClick({tagId: id});
     }
 
     render() {

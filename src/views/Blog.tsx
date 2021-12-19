@@ -87,7 +87,7 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
             title={this.props.article.title}
             extra={[
               <Tag color="red" key="author">
-                作者：admin
+                作者：{ this.props.article!.user &&  this.props.article.user.username }
               </Tag>,
               <span style={{marginTop: 10}} key="time">
                 {
@@ -97,8 +97,8 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
             ]}
           >
             <div className="article-tags">
-              <span>所属标签: {this.props.article.category && this.props.article.category.categoryName}</span>
-              <span>{
+              <span>所属分类: {this.props.article.category && this.props.article.category.categoryName}</span>
+              <span>所属标签: {
                 this.props.article.tags && this.props.article.tags!.map((v: {[key: string]: any} ) => (
                   <Tag
                     key={v.tagId}

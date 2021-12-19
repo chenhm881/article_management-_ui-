@@ -1,7 +1,7 @@
 import {Form, Input, Button, Space, Select, InputNumber, SelectProps} from 'antd';
 import React from "react";
 import {Dispatch} from "redux";
-import {findFailure, findSuccess, saveFailure, saveSuccess} from "../redux/articles";
+import {findFailure, findSuccess, saveFailure, saveSuccess, newPublish} from "../redux/articles";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import {RouteConfigComponentProps} from "react-router-config";
@@ -30,6 +30,7 @@ interface PropsInterface extends RouteConfigComponentProps<any> {
     saveFailure: (payload: any) => void,
     findSuccess: (payload: any) => void,
     findFailure: (payload: any) => void,
+    newPublish: (payload: any) => void,
     listCategorySuccess: (payload: any) => void,
     listCategoryFailure: (payload: any) => void
     listTagSuccess: (payload: any) => void,
@@ -80,9 +81,17 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
             this.props.history.push({pathname: "/about"});
         }
         let match =this.props.match.params
-        if (match.id ) {this.getArticle(match.id);}
-        getCategories("", this.props);
-        getTags("", this.props);
+        if (match.id ) {this.getArticle(match.id);} else {
+            this.props.newPublish({data: {}});
+        }
+        getCategories("", {
+            listSuccess: this.props.listCategorySuccess,
+            listFailure: this.props.listCategoryFailure
+        });
+        getTags("", {
+            listSuccess: this.props.listTagSuccess,
+            listFailure: this.props.listTagFailure
+        });
     }
 
     getArticle(id: number) {
@@ -211,6 +220,7 @@ const mapDispatcherToProps = (dispatch: Dispatch) => ({
     saveFailure: (payload: any) => dispatch(saveFailure(payload)),
     findSuccess: (payload: any) => dispatch(findSuccess(payload)),
     findFailure: (payload: any) => dispatch(findFailure(payload)),
+    newPublish: (payload: any) => dispatch(newPublish(payload)),
     listCategorySuccess: (payload: any) => dispatch(listCategorySuccess(payload)),
     listCategoryFailure: (payload: any) => dispatch(listCategoryFailure(payload)),
     listTagSuccess: (payload: any) => dispatch(listTagSuccess(payload)),
