@@ -27,7 +27,7 @@ class Articles extends React.Component<PropsInterface> {
     }
 
     getArticles() {
-        getArticleList(null, this.props)
+        getArticleList({}, this.props)
     }
 
     render() {

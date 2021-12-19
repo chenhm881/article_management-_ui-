@@ -7,12 +7,16 @@ import {RouteConfigComponentProps} from "react-router-config";
 import {listSuccess as listCategorySuccess, listFailure as listCategoryFailure} from "../redux/categories";
 import {withRouter} from "react-router-dom";
 import {getCategories} from "../ajax/categories";
+import {getArticleList} from "../ajax/articles";
+import {listFailure as ListArticleFailure, listSuccess as listArticleSuccess} from "../redux/articles";
 
 interface PropsInterface extends RouteConfigComponentProps<any> {
     categories: [{[key: string]: any}],
     message: string,
     listSuccess: (payload: any) => void,
-    listFailure: (payload: any) => void
+    listFailure: (payload: any) => void,
+    listArticleSuccess: (payload: any) => void,
+    ListArticleFailure: (payload: any) => void,
 }
 
 interface StateInterface {
@@ -51,6 +55,14 @@ class Categories extends React.Component<PropsInterface, StateInterface> {
         getCategories({pageSize: 3, page: 1},this.props)
     }
 
+    onArticleFilter(evt: any, id: number) {
+        let params = {
+            listSuccess: this.props.listArticleSuccess,
+            listFailure: this.props.ListArticleFailure
+        }
+        getArticleList({categoryId: id},  params);
+    }
+
     render() {
         let {categories} = this.props;
         return (
@@ -70,7 +82,7 @@ class Categories extends React.Component<PropsInterface, StateInterface> {
                                 className={"article-tag"}
                                 style={{marginBottom: "8px"}}
                                 color={this.color[Math.floor(Math.random()*this.color.length)]}
-                                onClick={()=>{}}
+                                onClick={(evt) => this.onArticleFilter(evt, v.categoryId)}
                             >
                                 {v.categoryName}
                             </Tag>
@@ -92,7 +104,9 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatcherToProps = (dispatch: Dispatch) => ({
     listSuccess: (payload: any) => dispatch(listCategorySuccess(payload)),
-    listFailure: (payload: any) => dispatch(listCategoryFailure(payload))
+    listFailure: (payload: any) => dispatch(listCategoryFailure(payload)),
+    listArticleSuccess: (payload: any) => dispatch(listArticleSuccess(payload)),
+    ListArticleFailure: (payload: any) => dispatch(ListArticleFailure(payload))
 });
 
 
