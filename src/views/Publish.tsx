@@ -126,7 +126,6 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
             if (match.id) {
                 data.id = match.id;
             }
-            data.tags = values.tags;
             save(data, this.props);
         };
 
@@ -139,8 +138,8 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
               name="nest-messages"
               fields={[
                   {
-                      name: [ 'tags'],
-                      value: (article.tags instanceof Array ? article.tags.map(({tagId }) => tagId) : undefined)
+                      name: ['article', 'tags'],
+                      value: (article.tags instanceof Array ? article.tags.map(({id, tagName }) => ( id)) : undefined)
                   },
                   {
                       name: ['article', 'title'],
@@ -178,7 +177,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
                     style={{ width: '100%' }}
                     placeholder="Please select"
                     onChange={(value) => handleChange('tags', value)}
-                    options={listTag.map(({tagId, tagName}) => ({value: tagId, label: tagName}))}
+                    options={listTag.map(({id, tagName}) => ({value: id, label: tagName}))}
                 />
             </Form.Item>
             <Form.Item name={['article', 'summary']} label="Summary" rules={[{ required: true }]}>
