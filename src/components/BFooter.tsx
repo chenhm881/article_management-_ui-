@@ -7,7 +7,7 @@ class BFooter extends React.Component {
 
     render() {
         return (
-            <Footer style={{ textAlign: 'center' }}>Book Blog ©2018 Created by Huiming</Footer>
+            <Footer style={{ textAlign: 'center' }}>Book Blog ©2021 Created by Huiming</Footer>
         );
     }
 }
