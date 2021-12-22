@@ -62,11 +62,11 @@ class Articles extends React.Component<PropsInterface> {
                         actions={[
                             <Space>
                                 {React.createElement(MessageOutlined)}
-                                {2}
+                                {0}
                             </Space>,
                             <Space>
                                 {React.createElement(LikeOutlined)}
-                                {156}
+                                {0}
                             </Space>
                         ]}
                         extra={
