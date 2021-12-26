@@ -17,6 +17,7 @@ export function register(data: any, props: any) {
             {timeout: 86400000, headers: {
                     'Content-type': "application/json",
                     "dataType": "json",
+
                 }}).then((res: any) => {
         if (res && res.status === 200 && res.data) {
             props.registerSuccess(res)

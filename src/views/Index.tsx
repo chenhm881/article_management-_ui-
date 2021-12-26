@@ -12,6 +12,7 @@ import About from "./About";
 import {getCookie, getParamByName, getUsernameFromUrl} from "../ajax/methods";
 import "./../styles/index.scss";
 import Archive from "./Archive";
+import BlogComment from "../components/BlogComment";
 
 const Index = (props: RouteComponentProps | any) => {
     const { location } = props;
@@ -89,6 +90,7 @@ const Index = (props: RouteComponentProps | any) => {
           <Row style={{margin: 24}}>
               <Col>
                   <Categories onCategoryClick ={(query) => onCategoryClick(query)}/>
+
               </Col>
           </Row>
           </Col>

@@ -7,9 +7,7 @@ import {withRouter} from "react-router-dom";
 import {listFailure, listSuccess} from "../redux/articles";
 import {getArticleList} from "../ajax/articles";
 import {RouteConfigComponentProps} from "react-router-config";
-import marked from "marked";
-import {get} from "http";
-import Cookies from "js-cookie";
+
 
 interface PropsInterface extends RouteConfigComponentProps<any> {
     articles: [{[key: string]: any}],
@@ -62,7 +60,7 @@ class Articles extends React.Component<PropsInterface> {
                         actions={[
                             <Space>
                                 {React.createElement(MessageOutlined)}
-                                {0}
+                                {item.commentCounts}
                             </Space>,
                             <Space>
                                 {React.createElement(LikeOutlined)}

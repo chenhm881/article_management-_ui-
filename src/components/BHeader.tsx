@@ -23,11 +23,7 @@ import profile from "../assets/avatar.png"
 const { Header } = Layout;
 const { TabPane } = Tabs;
 
-type IProps = {
-    name: string,
-    loginTodo: (name: string) => void,
-    logoutTodo: (name: string) => void
-}
+
 
 interface PropsInterface extends RouteComponentProps<any> {
     name: string,
@@ -36,24 +32,6 @@ interface PropsInterface extends RouteComponentProps<any> {
     onTabChange: (pathname: string)=> void
 }
 
-type State = {
-    login: boolean,
-    register: boolean,
-    nav: string,
-    user: string
-}
-
-interface IStateProps {
-    id: number;
-    isCompleted: boolean;
-    title: string;
-    tabKey: string
-}
-interface IDispatcherProps {
-    deleteTodo: () => void;
-    toggleTodo: () => void;
-    editTodo: (text: string) => void;
-}
 
 export interface IStoreState {
     user: string,
@@ -61,10 +39,6 @@ export interface IStoreState {
     register: boolean,
     nav: string,
     tabKey: string
-}
-
-export interface IUserName {
-    name: string
 }
 
 class BHeader extends React.Component<PropsInterface> {

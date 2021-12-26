@@ -76,8 +76,8 @@
 }
 
 /* ----------- iPhone 4 and 4S ----------- */
-/* @media only screen 
-  and (min-device-width: 320px) 
+/* @media only screen
+  and (min-device-width: 320px)
   and (max-device-width: 480px)
   and (-webkit-min-device-pixel-ratio: 2) {
     .article-wrapper {
@@ -85,8 +85,8 @@
     }
 } */
 /* ----------- iPhone 5 and 5S ----------- */
-/* @media only screen 
-  and (min-device-width: 320px) 
+/* @media only screen
+  and (min-device-width: 320px)
   and (max-device-width: 568px)
   and (-webkit-min-device-pixel-ratio: 2) {
     .article-wrapper {
@@ -102,7 +102,7 @@
 } */
 /* ----------- iPhone 6 ----------- */
 /* @media only screen
-  and (min-device-width: 375px) 
+  and (min-device-width: 375px)
   and (max-device-width: 667px)
   and (-webkit-min-device-pixel-ratio: 2) {
     .article-wrapper {
@@ -111,9 +111,9 @@
 } */
 /* ----------- iPhone 6+ ----------- */
 /* Portrait and Landscape */
-/* @media only screen 
-  and (min-device-width: 414px) 
-  and (max-device-width: 736px) 
+/* @media only screen
+  and (min-device-width: 414px)
+  and (max-device-width: 736px)
   and (-webkit-min-device-pixel-ratio: 2) {
     .article-wrapper {
       width: 366px;
@@ -121,19 +121,19 @@
 } */
 /* ----------- iPad ----------- */
 /* Portrait and Landscape */
-/* @media only screen 
-  and (min-device-width: 768px) 
-  and (max-device-width: 1024px) 
+/* @media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
   and (-webkit-min-device-pixel-ratio: 1) {
     .article-wrapper {
       width: 450px;
     }
 } */
 /* Landscape */
-/* @media only screen 
-  and (min-device-width: 768px) 
-  and (max-device-width: 1024px) 
-  and (orientation: landscape) 
+/* @media only screen
+  and (min-device-width: 768px)
+  and (max-device-width: 1024px)
+  and (orientation: landscape)
   and (-webkit-min-device-pixel-ratio: 1) {
     .article-wrapper {
       width: 610px;
@@ -358,16 +358,32 @@
 .article-detail table th:first-child {
   border-left: none;
 }
+
+.article-wrapper .article-info-box {
+  display: -webkit-flex; /* Safari */
+  display: flex;
+}
 .article-wrapper .article-tags {
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
+  margin-left: auto;
 }
+
+.article-tags .span-margin-m{
+  margin-right: 8px;
+  color: #531dab;
+  background: #f9f0ff;
+  border-color: #d3adf7;
+  border: 1px solid #d9d9d9;
+}
+
 .article-wrapper .ant-card-body {
   padding-top: 12px;
 }
 
-@media only screen 
-  and (min-device-width: 768px) 
+
+@media only screen
+  and (min-device-width: 768px)
   and (-webkit-min-device-pixel-ratio: 1) {
     .article-wrapper .ant-card-head-title {
       font-size: 1.5em;

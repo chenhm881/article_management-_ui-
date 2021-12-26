@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {Fragment} from 'react'
 import { connect } from 'react-redux'
 import marked from 'marked'
 import hljs from 'highlight.js'
@@ -7,18 +7,21 @@ import {
   Tag,
   Row,
   Col,
-  BackTop
+  BackTop, Space, Tooltip, Button
 } from 'antd'
 
 import './../styles/blog.css'
 import {RouteConfigComponentProps} from "react-router-config";
 import {Dispatch} from "redux";
 import {findFailure, findSuccess} from "../redux/articles";
-import {withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import {find} from "../ajax/articles";
+import {LikeOutlined, MessageOutlined} from "@ant-design/icons";
+import BlogComment from "../components/BlogComment";
+import Categories from "../components/Categories";
 
 
-interface PropsInterface extends RouteConfigComponentProps<any> {
+interface PropsInterface extends RouteComponentProps<any> {
   article: {[key: string]: any},
   tags: number[],
   message: string,
@@ -34,7 +37,7 @@ interface StateInterface {
 
 class Blog extends React.Component<PropsInterface, StateInterface> {
 
-  constructor(props: PropsInterface | Readonly<PropsInterface>)
+  constructor(props: PropsInterface | any)
   {
     super(props);
     this.state = {
@@ -77,46 +80,68 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
   render() {
 
     return (
-      <Row>
-        <BackTop visibilityHeight={300}/>
-        <Col
-        >
-          <Card
-            className="article-wrapper"
-            loading={this.state.loading}
-            title={this.props.article.title}
-            extra={[
-              <Tag color="red" key="author">
-                作者：{ this.props.article!.user &&  this.props.article.user.username }
-              </Tag>,
-              <span style={{marginTop: 10}} key="time">
-                {
-                  this.props.article.createDate
-                }
-              </span>
-            ]}
-          >
-            <div className="article-tags">
-              <span>所属分类: {this.props.article.category && this.props.article.category.categoryName}</span>
-              <span>所属标签: {
-                this.props.article.tags && this.props.article.tags!.map((v: {[key: string]: any} ) => (
-                  <Tag
-                    key={v.tagId}
-                    color={this.color[Math.floor(Math.random()*this.color.length)]}
-                    onClick={()=>{}}
-                  >
-                    {v.tagName}
-                  </Tag>
-                ))}
-                </span>
-            </div>
-            <div
-              className="article-detail"
-              dangerouslySetInnerHTML={{ __html: this.props.article.content ? marked(this.props.article.content) : '' }}
-            />
-          </Card>
-        </Col>
-      </Row>
+        <Fragment>
+          <Row>
+            <BackTop visibilityHeight={300}/>
+            <Col
+            >
+              <Card
+                className="article-wrapper"
+                loading={this.state.loading}
+                title={this.props.article.title}
+                extra={[
+                  <Tag color="red" key="author">
+                    作者：{ this.props.article!.user &&  this.props.article.user.username }
+                  </Tag>,
+                  <Tag key="create"><span style={{marginTop: 10}} key="time">
+                    {
+                      this.props.article.createDate
+                    }
+                  </span></Tag>
+                ]}
+              >
+                <div className={"article-info-box"}>
+                  <div style={{display: "flex"}}> <Space>
+                    {React.createElement(MessageOutlined)}
+                    {this.props.article.commentCounts}
+                  </Space>
+                    <div style={{marginLeft: "10px"}}>
+                      <Tooltip title="search">
+                        <Button type="link" icon={<LikeOutlined />} />
+                      </Tooltip>
+                    </div>
+                  </div>
+                  <div className="article-tags">
+                    <span>所属分类: <Tag key="category" color={"geekblue"}>{this.props.article.category && this.props.article.category.categoryName}</Tag></span>
+                    <span>所属标签: {
+                      this.props.article.tags && this.props.article.tags!.map((v: {[key: string]: any} ) => (
+                        <Tag
+                          key={v.id}
+                          color={this.color[Math.floor(Math.random()*this.color.length)]}
+                          onClick={()=>{}}
+                        >
+                          {v.tagName}
+                        </Tag>
+                      ))}
+                      </span>
+                  </div>
+                </div>
+                <div
+                  className="article-detail"
+                  dangerouslySetInnerHTML={{ __html: this.props.article.content ? marked(this.props.article.content) : '' }}
+                />
+              </Card>
+            </Col>
+          </Row>
+          <Row style={{marginTop: "20px"}}>
+            <Col>
+              <Card>
+                { this.props.article && this.props.article.id && <BlogComment article={this.props.article}/> }
+              </Card>
+            </Col>
+          </Row>
+
+        </Fragment>
     )
   }
 }
