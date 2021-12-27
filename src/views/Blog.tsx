@@ -12,11 +12,15 @@ import {
 
 import './../styles/blog.css'
 import {Dispatch} from "redux";
-import {findFailure, findSuccess} from "../redux/articles";
+import {findSuccess, findFailure} from "../redux/articles";
+import {findSuccess as findLikeSuccess, findFailure as findLikeFailure,
+  saveFailure as saveLikeSuccess, saveFailure as saveLikeFailure} from "../redux/likeState";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {find} from "../ajax/articles";
+import {find as findLike} from "../ajax/likeState";
 import {LikeOutlined, MessageOutlined} from "@ant-design/icons";
 import BlogComment from "../components/BlogComment";
+import Cookies from "js-cookie";
 
 
 
@@ -26,7 +30,11 @@ interface PropsInterface extends RouteComponentProps<any> {
   message: string,
   category: string,
   findSuccess: (payload: any) => void,
-  findFailure: (payload: any) => void
+  findFailure: (payload: any) => void,
+  findLikeSuccess: (payload: any) => void,
+  findLikeFailure: (payload: any) => void,
+  saveLikeSuccess: (payload: any) => void,
+  saveLikeFailure: (payload: any) => void
 }
 
 interface StateInterface {
@@ -66,7 +74,9 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
     })
   }
   componentDidMount() {
-
+    if (Cookies.get("authorization")) {
+      this.getLikeState(this.state.id, this.props);
+    }
     this.setState({
       loading: !this.state.loading
     })
@@ -74,6 +84,10 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
 
   getBlog() {
     find(this.state.id,  this.props);
+  }
+
+  getLikeState(id: number, props: PropsInterface) {
+    findLike({articleId: id, authorId: 1}, props);
   }
 
   render() {
@@ -100,13 +114,10 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
                 ]}
               >
                 <div className={"article-info-box"}>
-                  <div style={{display: "flex"}}> <Space>
-                    {React.createElement(MessageOutlined)}
-                    {this.props.article.commentCounts}
-                  </Space>
+                  <div style={{display: "flex"}}>
                     <div style={{marginLeft: "10px"}}>
                       <Tooltip title="search">
-                        <Button type="link" icon={<LikeOutlined />} />
+                        <Button disabled={true} type="link" icon={<LikeOutlined />} />
                       </Tooltip>
                     </div>
                   </div>
@@ -139,7 +150,6 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
               </Card>
             </Col>
           </Row>
-
         </Fragment>
     )
   }
@@ -159,7 +169,11 @@ const mapStateToProps = (state: any) => {
 
 const mapDispatcherToProps = (dispatch: Dispatch) => ({
   findSuccess: (payload: any) => dispatch(findSuccess(payload)),
-  findFailure: (payload: any) => dispatch(findFailure(payload))
+  findFailure: (payload: any) => dispatch(findFailure(payload)),
+  findLikeSuccess: (payload: any) => dispatch(findLikeSuccess(payload)),
+  findLikeFailure: (payload: any) => dispatch(findLikeFailure(payload)),
+  saveLikeSuccess: (payload: any) => dispatch(saveLikeSuccess(payload)),
+  saveLikeFailure: (payload: any) => dispatch(saveLikeFailure(payload))
 });
 
 
