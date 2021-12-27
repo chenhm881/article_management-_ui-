@@ -56,7 +56,6 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
 
 interface PropsInterface extends RouteComponentProps<any> {
     comments: [any],
-    comment: any,
     article: any
     listSuccess: (payload: any) => void,
     listFailure: (payload: any) => void,
@@ -97,8 +96,7 @@ class BlogComment extends React.Component<PropsInterface, StateInterface> {
             const value = this.state.value;
             this.setState({
                 submitting: false,
-                value: '',
-                comment: {content: value}
+                value: ''
             });
             save(JSON.stringify({articleId: this.props.article.id, authorId: this.props.article.authorId, content: value}), this.props);
 
@@ -122,11 +120,8 @@ class BlogComment extends React.Component<PropsInterface, StateInterface> {
     };
 
     render() {
-        const { value, submitting, comment} = this.state;
+        const { value, submitting} = this.state;
         let {comments} = this.props;
-        if(comment && comment.content) {
-            comments.push(comment);
-        }
         return (
             <>
                 {comments && comments.length > 0 && <CommentList comments={comments} />}
@@ -151,6 +146,8 @@ class BlogComment extends React.Component<PropsInterface, StateInterface> {
 
 const mapStateToProps = (state: any) => {
     const {comments, comment} = state.commentStore;
+    if(comment) {comments.push(comment);}
+
     return {
         comments:  comments.map( (comment: any) => {
             return {
@@ -158,7 +155,6 @@ const mapStateToProps = (state: any) => {
                 id: comment.id
             }
         }),
-        comment: { content: comment ? comment.content : null, id: comment ? comment.id : null}
     }
 };
 

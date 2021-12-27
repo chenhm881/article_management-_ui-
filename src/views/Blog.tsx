@@ -11,14 +11,13 @@ import {
 } from 'antd'
 
 import './../styles/blog.css'
-import {RouteConfigComponentProps} from "react-router-config";
 import {Dispatch} from "redux";
 import {findFailure, findSuccess} from "../redux/articles";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {find} from "../ajax/articles";
 import {LikeOutlined, MessageOutlined} from "@ant-design/icons";
 import BlogComment from "../components/BlogComment";
-import Categories from "../components/Categories";
+
 
 
 interface PropsInterface extends RouteComponentProps<any> {
