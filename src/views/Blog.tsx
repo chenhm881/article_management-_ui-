@@ -69,14 +69,17 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
 
   componentWillMount() {
     this.getBlog();
+    if (Cookies.get("authorization") || true) {
+      this.getLikeState(this.state.id, {
+        findSuccess: this.props.findLikeSuccess,
+        findFailure: this.props.findLikeFailure
+      });
+    }
     marked.setOptions({
       highlight: (code: any) => hljs.highlightAuto(code).value
     })
   }
   componentDidMount() {
-    if (Cookies.get("authorization")) {
-      this.getLikeState(this.state.id, this.props);
-    }
     this.setState({
       loading: !this.state.loading
     })
@@ -86,7 +89,7 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
     find(this.state.id,  this.props);
   }
 
-  getLikeState(id: number, props: PropsInterface) {
+  getLikeState(id: number, props: any) {
     findLike({articleId: id, authorId: 1}, props);
   }
 
@@ -104,7 +107,7 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
                 title={this.props.article.title}
                 extra={[
                   <Tag color="red" key="author">
-                    作者：{ this.props.article!.user &&  this.props.article.user.username }
+                    作者：{ this.props.article!.user && this.props.article.user.username }
                   </Tag>,
                   <Tag key="create"><span style={{marginTop: 10}} key="time">
                     {
@@ -117,7 +120,7 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
                   <div style={{display: "flex"}}>
                     <div style={{marginLeft: "10px"}}>
                       <Tooltip title="search">
-                        <Button disabled={this.props.like.like} type="link" icon={<LikeOutlined />} />
+                        <Button disabled={!(this.props.like && this.props.like.like)} type="link" icon={<LikeOutlined />} />
                       </Tooltip>
                     </div>
                   </div>
