@@ -55,6 +55,20 @@ router.post('/comment/save', (req, res) => {
              });
 })
 
+router.post('/like', (req, res) => {
+    console.log('like');
+    res.json({"status": 200, "data":
+            {"id": 1, "like": true}
+        });
+})
+
+router.post('/like/save', (req, res) => {
+    console.log('like/save');
+    res.json({"status": 200, "data":
+            {"id": 1, "like": true}
+    });
+})
+
 app.use( cors( ) )
 app.use(function (req, res, next) {
     let host = req.get('host');

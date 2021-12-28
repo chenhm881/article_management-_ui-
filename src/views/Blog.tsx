@@ -23,12 +23,12 @@ import BlogComment from "../components/BlogComment";
 import Cookies from "js-cookie";
 
 
-
 interface PropsInterface extends RouteComponentProps<any> {
   article: {[key: string]: any},
   tags: number[],
   message: string,
   category: string,
+  like: any,
   findSuccess: (payload: any) => void,
   findFailure: (payload: any) => void,
   findLikeSuccess: (payload: any) => void,
@@ -117,7 +117,7 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
                   <div style={{display: "flex"}}>
                     <div style={{marginLeft: "10px"}}>
                       <Tooltip title="search">
-                        <Button disabled={true} type="link" icon={<LikeOutlined />} />
+                        <Button disabled={this.props.like.like} type="link" icon={<LikeOutlined />} />
                       </Tooltip>
                     </div>
                   </div>
@@ -158,14 +158,15 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
 
 const mapStateToProps = (state: any) => {
   const {article, message, tags, category } = state.blogStore;
+  const {likeState } = state.likeStateStore;
   return {
     article: article,
     message: message,
     category: category,
-    tags:tags
+    tags:tags,
+    like: likeState
   }
 };
-
 
 const mapDispatcherToProps = (dispatch: Dispatch) => ({
   findSuccess: (payload: any) => dispatch(findSuccess(payload)),
