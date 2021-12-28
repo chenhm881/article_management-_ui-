@@ -58,14 +58,14 @@ router.post('/comment/save', (req, res) => {
 router.post('/like', (req, res) => {
     console.log('like');
     res.json({"status": 200, "data":
-            {"id": 1, "like": true}
+            {"id": 1, "like": false}
         });
 })
 
 router.post('/like/save', (req, res) => {
     console.log('like/save');
     res.json({"status": 200, "data":
-            {"id": 1, "like": true}
+            {"id": 1, "like": false}
     });
 })
 
