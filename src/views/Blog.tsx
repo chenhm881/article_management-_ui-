@@ -14,10 +14,10 @@ import './../styles/blog.css'
 import {Dispatch} from "redux";
 import {findSuccess, findFailure} from "../redux/articles";
 import {findSuccess as findLikeSuccess, findFailure as findLikeFailure,
-  saveFailure as saveLikeSuccess, saveFailure as saveLikeFailure} from "../redux/likeState";
+  saveSuccess as saveLikeSuccess, saveFailure as saveLikeFailure} from "../redux/likeState";
 import {RouteComponentProps, withRouter} from "react-router-dom";
 import {find} from "../ajax/articles";
-import {find as findLike} from "../ajax/likeState";
+import {find as findLike, save} from "../ajax/likeState";
 import {LikeOutlined, MessageOutlined} from "@ant-design/icons";
 import BlogComment from "../components/BlogComment";
 import Cookies from "js-cookie";
@@ -93,6 +93,14 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
     findLike({articleId: id, authorId: 1}, props);
   }
 
+  likeOnClick = (evt: any, status: boolean) =>  {
+
+     save(JSON.stringify({like: !status, articleId: this.state.id, authorId: 1}), {
+       saveSuccess: this.props.saveLikeSuccess,
+       saveFailure: this.props.saveLikeFailure
+     })
+  }
+
   render() {
 
     return (
@@ -119,9 +127,14 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
                 <div className={"article-info-box"}>
                   <div style={{display: "flex"}}>
                     <div style={{marginLeft: "10px"}}>
-                      <Tooltip title="search">
-                        <Button disabled={!(this.props.like && this.props.like.like)} type="link" icon={<LikeOutlined />} />
+                      { this.props.like && this.props.like.like && <Tooltip title="取消点赞">
+                        <Button value={"true"} onClick={(evt: any) => this.likeOnClick(evt, true)} type="link" icon={<LikeOutlined />} />
                       </Tooltip>
+                      }
+                      { !(this.props.like && this.props.like.like) && <Tooltip title="点赞">
+                        <Button value={"false"} onClick={(evt: any) => this.likeOnClick(evt, false)} type="link" icon={<LikeOutlined />} style={{color: "gray"}} />
+                      </Tooltip>
+                      }
                     </div>
                   </div>
                   <div className="article-tags">

@@ -53,7 +53,7 @@ class Tags extends React.Component<PropsInterface, StateInterface> {
     }
 
     getTags() {
-        getTags(null, this.props)
+        getTags({}, this.props)
     }
 
 

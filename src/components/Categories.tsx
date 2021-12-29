@@ -53,7 +53,7 @@ class Categories extends React.Component<PropsInterface, StateInterface> {
     }
 
     getCategories() {
-        getCategories(null, this.props)
+        getCategories({}, this.props)
     }
 
     onArticleFilter(evt: any, id: number) {

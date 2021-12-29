@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const router = express.Router();
 const cors = require('cors')
+const bodyParser = require("express");
 
 
 router.post('/articles', (req,res) => {
@@ -21,7 +22,7 @@ router.get('/authorize/login', (req, res) => {
 
 router.get('/logout', (req, res) => {
     console.log('logout');
-    console.log(req.query.authorization);
+    console.log(req.params.authorization);
     res.redirect('http://localhost:3000/articles');
 })
 
@@ -64,18 +65,23 @@ router.post('/like', (req, res) => {
 
 router.post('/like/save', (req, res) => {
     console.log('like/save');
+    const isLike = req.query.like;
+
     res.json({"status": 200, "data":
-            {"id": 1, "like": false}
+            {"id": 1, "like": req.body.like}
     });
 })
 
 app.use( cors( ) )
+
 app.use(function (req, res, next) {
     let host = req.get('host');
     console.log(host);
     next();
 })
 
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", router);
 
 app.listen(3001);
