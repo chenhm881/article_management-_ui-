@@ -131,7 +131,7 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
                         <Button value={"true"} onClick={(evt: any) => this.likeOnClick(evt, true)} type="link" icon={<LikeOutlined />} />
                       </Tooltip>
                       }
-                      { !(this.props.like && this.props.like.like) && <Tooltip title="点赞">
+                      { (this.props.like && !this.props.like.like) && <Tooltip title="点赞">
                         <Button value={"false"} onClick={(evt: any) => this.likeOnClick(evt, false)} type="link" icon={<LikeOutlined />} style={{color: "gray"}} />
                       </Tooltip>
                       }
