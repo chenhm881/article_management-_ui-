@@ -7,6 +7,8 @@ const { Footer } = Layout;
 
 class About extends React.Component<any> {
 
+
+
     render() {
         return (
             <div>

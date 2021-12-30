@@ -98,7 +98,7 @@ class BlogComment extends React.Component<PropsInterface, StateInterface> {
                 submitting: false,
                 value: ''
             });
-            save(JSON.stringify({articleId: this.props.article.id, authorId: this.props.article.authorId, content: value}), this.props);
+            save(JSON.stringify({articleId: this.props.article.id, content: value}), this.props);
 
         }, 1000);
     };

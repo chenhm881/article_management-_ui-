@@ -69,7 +69,7 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
 
   componentWillMount() {
     this.getBlog();
-    if (Cookies.get("authorization") || true) {
+    if (Cookies.get("authorization")) {
       this.getLikeState(this.state.id, {
         findSuccess: this.props.findLikeSuccess,
         findFailure: this.props.findLikeFailure
@@ -90,12 +90,12 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
   }
 
   getLikeState(id: number, props: any) {
-    findLike({articleId: id, authorId: 1}, props);
+    findLike({articleId: id}, props);
   }
 
   likeOnClick = (evt: any, status: boolean) =>  {
 
-     save(JSON.stringify({like: !status, articleId: this.state.id, authorId: 1}), {
+     save(JSON.stringify({like: !status, articleId: this.state.id}), {
        saveSuccess: this.props.saveLikeSuccess,
        saveFailure: this.props.saveLikeFailure
      })
