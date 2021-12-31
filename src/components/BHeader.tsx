@@ -86,7 +86,7 @@ class BHeader extends React.Component<PropsInterface> {
             <Tabs activeKey={defaultTab}
                   centered
                   tabBarExtraContent={{
-                      left: <React.Fragment><div><span style={{fontSize: 36, color: "red"}}>明博园</span></div></React.Fragment>,
+                      left: <React.Fragment><div><span style={{fontSize: 36, color: "red"}}>明博园/明宇宙</span></div></React.Fragment>,
                       right: <React.Fragment><div
                                       className="nav-auth"
                                       style={{display: Cookies.get("username") ? 'none' : 'block'}}

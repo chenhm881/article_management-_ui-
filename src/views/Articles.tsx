@@ -64,7 +64,7 @@ class Articles extends React.Component<PropsInterface> {
                             </Space>,
                             <Space>
                                 {React.createElement(LikeOutlined)}
-                                {0}
+                                {item.likeCounts}
                             </Space>
                         ]}
                         extra={
