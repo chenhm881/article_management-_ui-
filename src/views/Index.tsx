@@ -52,6 +52,7 @@ const Index = (props: RouteComponentProps | any) => {
       props.history.push({
           pathname: pathname
       });
+      setQuery({});
       setActiveTabKey(pathname);
   };
 

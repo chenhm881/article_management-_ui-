@@ -22,7 +22,7 @@ class Articles extends React.Component<PropsInterface> {
 
     componentDidMount() {
        console.log(process.env);
-       this.getArticles({}, this.props);
+       this.getArticles(this.props.query, this.props);
     }
 
     UNSAFE_componentWillReceiveProps(nextPros: PropsInterface) {

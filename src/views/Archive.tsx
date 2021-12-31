@@ -4,7 +4,7 @@ import React from "react";
 import {Dispatch} from "redux";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {listFailure, listSuccess} from "../redux/articles";
+import {listFailure, listSuccess} from "../redux/archive";
 import {getArticleList} from "../ajax/articles";
 import {RouteConfigComponentProps} from "react-router-config";
 import marked from "marked";
@@ -24,7 +24,9 @@ class Archive extends React.Component<PropsInterface> {
 
     componentDidMount() {
        console.log(process.env);
-       this.getArticles();
+        if (Cookies.get("username")) {
+            this.getArticles();
+        }
     }
 
     getArticles() {
@@ -92,7 +94,7 @@ class Archive extends React.Component<PropsInterface> {
 }
 
 const mapStateToProps = (state: any) => {
-    const {articles, message, totalSize } = state.blogStore;
+    const {articles, message, totalSize } = state.archiveStore;
     return {
         articles: articles,
         message: message,
