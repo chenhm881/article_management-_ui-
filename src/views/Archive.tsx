@@ -58,11 +58,11 @@ class Archive extends React.Component<PropsInterface> {
                         actions={[
                             <Space>
                                 {React.createElement(MessageOutlined)}
-                                {2}
+                                {item.commentCounts}
                             </Space>,
                             <Space>
                                 {React.createElement(LikeOutlined)}
-                                {156}
+                                {item.likeCounts}
                             </Space>,
                             <Space style={{display: Cookies.get("username") ? "block" : "none"}}>
                                 <Button type="text" icon={<FormOutlined/>} onClick={() => {
@@ -94,9 +94,9 @@ class Archive extends React.Component<PropsInterface> {
 }
 
 const mapStateToProps = (state: any) => {
-    const {articles, message, totalSize } = state.archiveStore;
+    const {archives, message, totalSize } = state.archiveStore;
     return {
-        articles: articles,
+        articles: archives,
         message: message,
         totalSize: totalSize
     }
