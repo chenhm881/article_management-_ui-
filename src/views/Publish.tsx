@@ -100,8 +100,22 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
 
     render() {
         const layout = {
-            labelCol: { span: 4 },
-            wrapperCol: { span: 18 },
+            labelCol: {
+                xs: {
+                    span: 24,
+                },
+                sm: {
+                    span: 4,
+                },
+            },
+            wrapperCol: {
+                xs: {
+                    span: 24,
+                },
+                sm: {
+                    span: 16,
+                },
+            },
         };
         const { content } = this.state;
         const {article, category, tags, listCategory, listTag} = this.props;
@@ -134,7 +148,7 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
         };
 
         return (
-        <Form ref={this.formRef} {...layout}
+            <div style={{marginTop: "5%"}}><Form ref={this.formRef} {...layout}
               name="nest-messages"
               fields={[
                   {
@@ -190,12 +204,12 @@ class Publish extends React.Component<PropsInterface, StateInterface> {
                         modules={this.modules}
                         onChange={(value) => handleChange('content', value)} />
             </Form.Item>
-            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 11 }}>
                 <Button type="primary" htmlType="submit">
-                    Submit
+                    提交
                 </Button>
             </Form.Item>
-        </Form>
+            </Form></div>
         );
     }
 };

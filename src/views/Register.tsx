@@ -16,7 +16,7 @@ const formItemLayout = {
             span: 24,
         },
         sm: {
-            span: 8,
+            span: 4,
         },
     },
     wrapperCol: {
@@ -35,8 +35,8 @@ const tailFormItemLayout = {
             offset: 0,
         },
         sm: {
-            span: 16,
-            offset: 8,
+            span: 12,
+            offset: 10,
         },
     },
 };
@@ -75,7 +75,7 @@ export default connect(
     const {user, message} = props;
 
     return (
-        <Form
+        <div style={{position: "absolute", top: "20%", left: "30%", width: "50%"}}><Form
             {...formItemLayout}
             form={form}
             name="register"
@@ -171,9 +171,9 @@ export default connect(
 
             <Form.Item {...tailFormItemLayout}>
                 <Button type="primary" htmlType="submit">
-                    Register
+                    注册
                 </Button>
             </Form.Item>
-        </Form>
+        </Form></div>
     );
 }));

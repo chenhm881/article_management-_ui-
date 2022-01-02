@@ -113,16 +113,16 @@ class Blog extends React.Component<PropsInterface, StateInterface> {
                 className="article-wrapper"
                 loading={this.state.loading}
                 title={this.props.article.title}
-                extra={[
+                extra={<div style={{display: "flex", flexDirection: "row"}}>
                   <Tag color="red" key="author">
                     作者：{ this.props.article!.user && this.props.article.user.username }
-                  </Tag>,
-                  <Tag key="create"><span style={{marginTop: 10}} key="time">
+                  </Tag>
+                  {this.props.article.createDate && <Tag key="create" style={{marginLeft: 10}}><span key="time">
                     {
                       this.props.article.createDate
                     }
-                  </span></Tag>
-                ]}
+                  </span></Tag>}
+                </div>}
               >
                 <div className={"article-info-box"}>
                   <div style={{display: "flex"}}>

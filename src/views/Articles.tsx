@@ -72,7 +72,7 @@ class Articles extends React.Component<PropsInterface> {
                         }
                     >
                         <List.Item.Meta
-                            avatar={<Avatar src={item.avatar}/>}
+                            avatar={<Avatar src={item.avatar ? item.avatar : "https://joeschmoe.io/api/v1/random"}/>}
                             title={<a href={`/blog/${item.id}`}>{item.title}</a>}
                             description={item.summary}
                         />
